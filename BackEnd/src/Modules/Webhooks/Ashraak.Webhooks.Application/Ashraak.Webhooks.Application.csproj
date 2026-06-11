@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Webhooks.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ashraak.Webhooks.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Webhooks.Domain\Ashraak.Webhooks.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Application\Ashraak.BuildingBlocks.Application.csproj" />
+  </ItemGroup>
+</Project>

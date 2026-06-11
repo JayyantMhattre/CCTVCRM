@@ -1,0 +1,44 @@
+---
+description: Microsoft C# and .NET coding standards
+globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]
+alwaysApply: true
+---
+
+# .NET / C# Standards
+
+Follow Microsoft's official coding conventions strictly.
+
+## Naming
+- PascalCase: classes, methods, properties, enums, interfaces (prefix I), events
+- camelCase: local variables, method parameters
+- _camelCase: private instance fields
+- SCREAMING_SNAKE_CASE: constants only if truly constant (prefer `static readonly`)
+
+## Structure
+- One class per .cs file; filename = class name
+- Namespace must match folder structure
+- Order members: fields → constructors → properties → public methods → private methods
+
+## Code Style
+- Use `var` only when the type is obvious
+- Always use braces for control flow blocks
+- Use expression-bodied members only for trivial one-liners
+- Prefer `is null` over `== null`
+- Use `string.IsNullOrWhiteSpace()` not `.Length == 0`
+- Use `ArgumentNullException.ThrowIfNull()` (.NET 6+)
+
+## Async
+- All async methods must be named with Async suffix
+- Always await — never use .Result, .Wait(), or .GetAwaiter().GetResult()
+- Use CancellationToken parameters in all async methods
+
+## Dapper / SQL
+- Never build SQL strings via concatenation — use parameterized queries
+- Map stored procedure results to strongly typed models
+- Use `decimal` for all financial/monetary fields, never `double` or `float`
+
+## API / Controllers
+- Controllers must be thin — no business logic
+- Use [FromBody], [FromQuery] attributes explicitly
+- Return ActionResult<T> with appropriate HTTP status codes
+- Use ProblemDetails for error responses

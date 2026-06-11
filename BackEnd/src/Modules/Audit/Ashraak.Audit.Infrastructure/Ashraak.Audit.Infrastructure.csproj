@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Audit.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Quartz" />
+    <PackageReference Include="Quartz.Extensions.Hosting" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" />
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Audit.Application\Ashraak.Audit.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Infrastructure\Ashraak.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\Ashraak.Infrastructure.Shared\Ashraak.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+</Project>

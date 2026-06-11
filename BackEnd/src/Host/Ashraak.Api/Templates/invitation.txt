@@ -1,0 +1,5 @@
+Subject: You are invited to Ashraak
+You have been invited to join tenant {{TenantId}}.
+
+Use this link with token: {{InvitationToken}}
+Expires: {{ExpiresOnUtc}}

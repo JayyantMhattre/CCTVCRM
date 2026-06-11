@@ -1,0 +1,6 @@
+Subject: Tenant suspended
+Tenant {{TenantId}} has been suspended.
+
+Reason: {{Reason}}
+
+Contact support to restore access.

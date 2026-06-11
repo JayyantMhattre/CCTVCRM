@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Ashraak.Architecture.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="NetArchTest.Rules" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference all modules so their assemblies are available for analysis -->
+    <ProjectReference Include="..\..\src\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\src\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Auth\Ashraak.Auth.Domain\Ashraak.Auth.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Auth\Ashraak.Auth.Application\Ashraak.Auth.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Auth\Ashraak.Auth.Infrastructure\Ashraak.Auth.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenant\Ashraak.Tenant.Domain\Ashraak.Tenant.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenant\Ashraak.Tenant.Application\Ashraak.Tenant.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Tenant\Ashraak.Tenant.Infrastructure\Ashraak.Tenant.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Users\Ashraak.Users.Domain\Ashraak.Users.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Users\Ashraak.Users.Application\Ashraak.Users.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Users\Ashraak.Users.Infrastructure\Ashraak.Users.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\Ashraak.Audit.Domain\Ashraak.Audit.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\Ashraak.Audit.Application\Ashraak.Audit.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Audit\Ashraak.Audit.Infrastructure\Ashraak.Audit.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Caching\Ashraak.Caching.Abstractions\Ashraak.Caching.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Caching\Ashraak.Caching.Redis\Ashraak.Caching.Redis.csproj" />
+  </ItemGroup>
+</Project>

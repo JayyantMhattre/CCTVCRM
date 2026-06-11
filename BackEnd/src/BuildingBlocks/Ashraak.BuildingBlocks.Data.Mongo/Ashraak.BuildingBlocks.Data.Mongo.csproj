@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Ashraak.BuildingBlocks.Data.Mongo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" />
+    <!-- IConfiguration + Bind extension method -->
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.BuildingBlocks.Data.Abstractions\Ashraak.BuildingBlocks.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

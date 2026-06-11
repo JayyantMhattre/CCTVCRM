@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Tenant.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Riok.Mapperly" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Tenant.Domain\Ashraak.Tenant.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Application\Ashraak.BuildingBlocks.Application.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,2 @@
+Subject: Verify your Ashraak email
+Please verify your email using code: {{VerificationCode}}

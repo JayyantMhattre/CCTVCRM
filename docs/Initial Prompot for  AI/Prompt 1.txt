@@ -1,0 +1,111 @@
+PROJECT BOOTSTRAP — PLATFORM DISCOVERY
+
+IMPORTANT
+
+This repository was created from our Enterprise Platform V1 base template.
+
+Before implementing any business functionality:
+
+DO NOT WRITE CODE.
+
+DO NOT CREATE MODULES.
+
+DO NOT MODIFY EXISTING PLATFORM CAPABILITIES.
+
+First understand the platform.
+
+========================================================
+
+OBJECTIVE
+
+Perform a complete platform discovery.
+
+Review all documentation and architecture.
+
+========================================================
+
+READ AND ANALYZE
+
+docs/
+
+docs/releases/
+
+docs/governance/
+
+docs/architecture/
+
+docs/modules/
+
+docs/mobile/
+
+docs/frontend/
+
+docs/themes/
+
+ADR folders
+
+README.md
+
+Platform Manifest
+
+Module Map
+
+========================================================
+
+GENERATE
+
+docs/project-bootstrap/platform-discovery-report.md
+
+========================================================
+
+DOCUMENT
+
+Existing capabilities
+
+Platform services
+
+Identity
+
+Files
+
+Notifications
+
+Audit
+
+Webhooks
+
+API Keys
+
+Theme Engine
+
+Mobile
+
+Frontend
+
+Backend
+
+Documentation Governance
+
+========================================================
+
+IDENTIFY
+
+Capabilities already available
+
+Capabilities reusable for this project
+
+Capabilities not required
+
+Potential extension points
+
+========================================================
+
+OUTPUT
+
+Platform Discovery Report
+
+CCTV Project Readiness Assessment
+
+Reusable Platform Capabilities
+
+No code changes.

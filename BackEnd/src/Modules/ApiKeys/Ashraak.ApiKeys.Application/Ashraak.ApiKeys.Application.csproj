@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.ApiKeys.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.ApiKeys.Domain\Ashraak.ApiKeys.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Application\Ashraak.BuildingBlocks.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+  </ItemGroup>
+</Project>

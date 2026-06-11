@@ -1,0 +1,270 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ashraak — Base Docker Compose
+#
+# This file defines all services and is environment-agnostic.
+# It is ALWAYS loaded first.
+#
+# Override files (applied on top):
+#   docker-compose.override.yml  → development  (auto-loaded by Docker Compose)
+#   docker-compose.prod.yml      → production   (explicit: -f docker-compose.prod.yml)
+#
+# Secrets strategy:
+#   All sensitive values come from environment variables.
+#   Populate a .env file (copy from .env.example) for local development.
+#   For production: inject via CI/CD, Docker Swarm secrets, or Kubernetes secrets.
+#   NEVER commit real credentials to source control.
+#
+# Usage:
+#   Dev:   docker compose up -d
+#   Prod:  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Ashraak API (modular monolith) ──────────────────────────────────────────
+  ashraak-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    image: ashraak/api:${API_VERSION:-latest}
+    container_name: ashraak-api
+    restart: unless-stopped
+
+    environment:
+      # ASP.NET Core environment — controls which appsettings file is loaded
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+
+      # Bind to all interfaces inside the container on HTTP only.
+      # TLS termination is handled by a reverse proxy (nginx/Traefik) in production.
+      ASPNETCORE_URLS: http://+:8080
+
+      # ── PostgreSQL connection strings ─────────────────────────────────────
+      # ASP.NET Core configuration system maps SECTION__KEY env vars to
+      # nested JSON keys, so ConnectionStrings__Auth → ConnectionStrings:Auth.
+      # All modules share the same PostgreSQL instance but use separate schemas.
+      ConnectionStrings__DefaultConnection: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+      ConnectionStrings__Auth: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=auth
+      ConnectionStrings__Tenant: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=tenant
+      ConnectionStrings__Users: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=users
+
+      # ── Redis ──────────────────────────────────────────────────────────────
+      ConnectionStrings__Redis: >-
+        ${REDIS_HOST:-redis}:6379,password=${REDIS_PASSWORD:-},
+        abortConnect=false,connectTimeout=5000,syncTimeout=5000
+
+      # ── MongoDB ────────────────────────────────────────────────────────────
+      ConnectionStrings__MongoDB: >-
+        mongodb://${MONGO_USER:-ashraak}:${MONGO_PASSWORD}@${MONGO_HOST:-mongodb}:27017/${MONGO_DB:-ashraak_audit}?authSource=admin
+
+      # ── Logging ────────────────────────────────────────────────────────────
+      Seq__Url: http://${SEQ_HOST:-seq}:5341
+
+      # ── OpenTelemetry ──────────────────────────────────────────────────────
+      OpenTelemetry__Endpoint: http://${OTEL_HOST:-localhost}:4317
+
+      # ── JWT / OpenIddict signing key ───────────────────────────────────────
+      # In production, use a proper X.509 certificate or Azure Key Vault.
+      # This env var is consumed by the Auth module's DI registration.
+      Auth__SigningKeyBase64: ${JWT_SIGNING_KEY_BASE64}
+
+      # ── SSO providers ─────────────────────────────────────────────────────
+      Authentication__Google__ClientId:     ${GOOGLE_CLIENT_ID:-}
+      Authentication__Google__ClientSecret: ${GOOGLE_CLIENT_SECRET:-}
+      Authentication__Microsoft__ClientId:     ${MICROSOFT_CLIENT_ID:-}
+      Authentication__Microsoft__ClientSecret: ${MICROSOFT_CLIENT_SECRET:-}
+
+    ports:
+      # HOST:CONTAINER — override the host port in .env if 8080 is taken.
+      - "${API_PORT:-8080}:8080"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/health/live || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s   # allow EF Core migrations and OpenIddict init to complete
+      retries: 3
+
+  # ── PostgreSQL (Auth + Tenant + Users schemas) ──────────────────────────────
+  postgres:
+    image: postgres:17-alpine
+    container_name: ashraak-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER:-ashraak}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB:       ${POSTGRES_DB:-ashraak}
+
+    volumes:
+      # Named volume — data persists across container restarts.
+      - postgres_data:/var/lib/postgresql/data
+      # Init script — creates the per-module schemas on first startup.
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init-db.sql:ro
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ashraak} -d ${POSTGRES_DB:-ashraak}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ── Redis (caching module — permissions, sessions, config) ─────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: ashraak-redis
+    restart: unless-stopped
+
+    # Enable persistence (AOF) and password authentication.
+    # Password is empty by default in dev; set REDIS_PASSWORD in prod .env.
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass "${REDIS_PASSWORD:-}"
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+
+    volumes:
+      - redis_data:/data
+
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── MongoDB (audit module) ─────────────────────────────────────────────────
+  mongodb:
+    image: mongo:7
+    container_name: ashraak-mongodb
+    restart: unless-stopped
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-ashraak}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE:      ${MONGO_DB:-ashraak_audit}
+
+    volumes:
+      - mongo_data:/data/db
+
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── RabbitMQ (event bus — MassTransit) ────────────────────────────────────
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: ashraak-rabbitmq
+    restart: unless-stopped
+
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-ashraak}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MGMT_PORT:-15672}:15672"  # management UI
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ── Seq (structured log viewer) ────────────────────────────────────────────
+  seq:
+    image: datalust/seq:latest
+    container_name: ashraak-seq
+    restart: unless-stopped
+
+    environment:
+      ACCEPT_EULA: "Y"
+      # Set an API key in prod to restrict access to the Seq ingestion endpoint.
+      SEQ_FIRSTRUN_ADMINPASSWORDHASH: ${SEQ_ADMIN_PASSWORD_HASH:-}
+
+    volumes:
+      - seq_data:/data
+
+    ports:
+      - "${SEQ_PORT:-5341}:80"  # Seq UI
+
+    networks:
+      - ashraak-net
+
+# ── Named volumes ─────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  mongo_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  seq_data:
+    driver: local
+
+# ── Network ───────────────────────────────────────────────────────────────────
+networks:
+  ashraak-net:
+    driver: bridge

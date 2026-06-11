@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ashraak — Root .gitignore
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Secrets — NEVER commit these ─────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+**/secrets/
+# Keep the template
+!.env.example
+!**/.env.example
+
+# ── .NET build output ─────────────────────────────────────────────────────────
+**/[Bb]in/
+**/[Oo]bj/
+*.user
+*.suo
+**/.vs/
+**/TestResults/
+**/publish/
+
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+**/node_modules/
+**/dist/
+**/.pnpm-store/
+**/.turbo/
+
+# ── OS files ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+**/.idea/
+**/*.user
+**/*.suo
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Local override files are fine to commit; actual secrets are in .env (ignored above)

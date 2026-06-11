@@ -1,0 +1,169 @@
+// ============================================================================
+// CoreUI CSS entry point for the Ashraak frontend.
+//
+// This file replaces the plain Bootstrap import in main.tsx.
+// @coreui/coreui is a superset of Bootstrap 5 — it includes every Bootstrap
+// component plus CoreUI-specific components (Sidebar, Header, Footer, etc.).
+//
+// Load order in main.tsx:
+//   import './styles/coreui.scss'   ← this file (MUST come first)
+//
+// Customising:
+//   - Edit _variables.scss to override colours, fonts, spacing.
+//   - Add module-specific overrides at the bottom of this file.
+//   - Never import individual Bootstrap packages; always go through CoreUI.
+// ============================================================================
+
+// ── 1. SCSS variable overrides BEFORE CoreUI is imported ───────────────────
+//
+// The `with (...)` clause passes our custom Sass variables to CoreUI's
+// compile-time configuration.  This is how you set $primary, $font-family, etc.
+// Do NOT use a @use/@forward file for overrides — pass them inline here.
+// NOTE: comma-separated list values in @use...with MUST be wrapped in ()
+// so that Sass treats the commas as list separators (not config-param separators).
+@use "@coreui/coreui/scss/coreui" as * with (
+  $primary:                      #3b5fc0,
+  $success:                      #2eb85c,
+  $danger:                       #e55353,
+  $warning:                      #f9b115,
+  $info:                         #3399ff,
+  $font-family-sans-serif:       ("Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif),
+  $font-size-base:               0.9375rem,
+  $sidebar-width:                16rem,
+  $sidebar-narrow-width:         4rem,
+  $enable-deprecation-messages:  false,
+  $enable-transitions:           true
+);
+
+// ── 2. Page-level defaults (mirrors CoreUI template's style.scss) ──────────
+
+body {
+  // CoreUI template uses the subtle tertiary background as the page canvas.
+  background-color: var(--cui-tertiary-bg);
+}
+
+// ── 3. Wrapper — main content area that shifts to accommodate the sidebar ──
+
+.wrapper {
+  width: 100%;
+  // These CSS vars are set by React state in AppLayout when the sidebar is
+  // open/closed.  Default to 0 (sidebar hidden) so initial render is correct.
+  padding-inline:
+    var(--cui-sidebar-occupy-start, 0)
+    var(--cui-sidebar-occupy-end, 0);
+  will-change: auto;
+
+  @include transition(padding 0.15s);
+}
+
+// ── 4. Header / Sidebar sizing constants (from CoreUI template) ────────────
+
+.header > .container-fluid,
+.sidebar-header {
+  // 4rem content + 1px border-bottom.
+  min-height: calc(4rem + 1px);
+}
+
+.sidebar-brand-full {
+  margin-left: 3px;
+}
+
+.sidebar-header {
+  .nav-underline-border {
+    --cui-nav-underline-border-link-padding-x: 1rem;
+    --cui-nav-underline-border-gap: 0;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: calc(4rem + 1px);
+  }
+}
+
+// Align the collapse toggle to the end of the sidebar header.
+.sidebar-toggler {
+  margin-inline-start: auto;
+}
+
+// In narrow / unfoldable mode the toggle should be centred.
+.sidebar-narrow,
+.sidebar-narrow-unfoldable:not(:hover) {
+  .sidebar-toggler {
+    margin-inline-end: auto;
+  }
+}
+
+// Subheader row inside the main header (breadcrumb bar, etc.)
+.header > .container-fluid + .container-fluid {
+  min-height: 3rem;
+}
+
+// ── 5. Footer ──────────────────────────────────────────────────────────────
+
+.footer {
+  min-height: calc(3rem + 1px);
+}
+
+// ── 6. Dark mode overrides ─────────────────────────────────────────────────
+
+@include color-mode(dark) {
+  body {
+    background-color: var(--cui-dark-bg-subtle);
+  }
+
+  .footer {
+    --cui-footer-bg: var(--cui-body-bg);
+  }
+}
+
+// ── 7. Ashraak-specific application utilities ──────────────────────────────
+
+// Fade-in animation used by page transitions and toast notifications.
+@keyframes ashraak-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.page-fade-in {
+  animation: ashraak-fade-in 0.2s ease-out both;
+}
+
+// Status badge colours (tenant plan labels, etc.)
+.badge-plan-free       { background-color: var(--cui-secondary-bg);  color: var(--cui-body-color); }
+.badge-plan-pro        { background-color: var(--cui-info);           color: #fff; }
+.badge-plan-enterprise { background-color: var(--cui-warning);        color: #000; }
+
+// Subtle card variant used for stat tiles on the Dashboard.
+.card-stat {
+  border: none;
+  border-radius: var(--cui-border-radius-lg);
+  background-color: var(--cui-body-bg);
+  box-shadow: var(--cui-box-shadow-sm);
+  transition: box-shadow 0.15s;
+
+  &:hover {
+    box-shadow: var(--cui-box-shadow);
+  }
+}
+
+// Avatar circle helper.
+.avatar-sm {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+// ── 8. Accessibility ───────────────────────────────────────────────────────
+
+// High-contrast focus ring — CoreUI resets :focus-visible in some themes.
+:focus-visible {
+  outline: 2px solid var(--cui-primary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,111 @@
+<Solution>
+  <!-- ═══════════════════════════════════════════════════════
+       BUILDING BLOCKS  — shared cross-cutting base libraries
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.Application/Ashraak.BuildingBlocks.Application.csproj" />
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.EventBus/Ashraak.BuildingBlocks.EventBus.csproj" />
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.Infrastructure/Ashraak.BuildingBlocks.Infrastructure.csproj" />
+  </Folder>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SHARED KERNEL  — DDD primitives + cross-module contracts
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/Shared/">
+    <Project Path="src/Shared/Ashraak.SharedKernel/Ashraak.SharedKernel.csproj" />
+    <Project Path="src/Shared/Ashraak.SharedKernel.Contracts/Ashraak.SharedKernel.Contracts.csproj" />
+  </Folder>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MODULES  — each module is independently replaceable
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/Modules/Auth/">
+    <Project Path="src/Modules/Auth/Ashraak.Auth.Domain/Ashraak.Auth.Domain.csproj" />
+    <Project Path="src/Modules/Auth/Ashraak.Auth.Application/Ashraak.Auth.Application.csproj" />
+    <Project Path="src/Modules/Auth/Ashraak.Auth.Infrastructure/Ashraak.Auth.Infrastructure.csproj" />
+    <Project Path="src/Modules/Auth/Ashraak.Auth.Api/Ashraak.Auth.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Tenant/">
+    <Project Path="src/Modules/Tenant/Ashraak.Tenant.Domain/Ashraak.Tenant.Domain.csproj" />
+    <Project Path="src/Modules/Tenant/Ashraak.Tenant.Application/Ashraak.Tenant.Application.csproj" />
+    <Project Path="src/Modules/Tenant/Ashraak.Tenant.Infrastructure/Ashraak.Tenant.Infrastructure.csproj" />
+    <Project Path="src/Modules/Tenant/Ashraak.Tenant.Api/Ashraak.Tenant.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Users/">
+    <Project Path="src/Modules/Users/Ashraak.Users.Domain/Ashraak.Users.Domain.csproj" />
+    <Project Path="src/Modules/Users/Ashraak.Users.Application/Ashraak.Users.Application.csproj" />
+    <Project Path="src/Modules/Users/Ashraak.Users.Infrastructure/Ashraak.Users.Infrastructure.csproj" />
+    <Project Path="src/Modules/Users/Ashraak.Users.Api/Ashraak.Users.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Audit/">
+    <Project Path="src/Modules/Audit/Ashraak.Audit.Domain/Ashraak.Audit.Domain.csproj" />
+    <Project Path="src/Modules/Audit/Ashraak.Audit.Application/Ashraak.Audit.Application.csproj" />
+    <Project Path="src/Modules/Audit/Ashraak.Audit.Infrastructure/Ashraak.Audit.Infrastructure.csproj" />
+    <Project Path="src/Modules/Audit/Ashraak.Audit.Api/Ashraak.Audit.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Caching/">
+    <Project Path="src/Modules/Caching/Ashraak.Caching.Abstractions/Ashraak.Caching.Abstractions.csproj" />
+    <Project Path="src/Modules/Caching/Ashraak.Caching.Redis/Ashraak.Caching.Redis.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Notifications/">
+    <Project Path="src/Modules/Notifications/Ashraak.Notifications.Domain/Ashraak.Notifications.Domain.csproj" />
+    <Project Path="src/Modules/Notifications/Ashraak.Notifications.Application/Ashraak.Notifications.Application.csproj" />
+    <Project Path="src/Modules/Notifications/Ashraak.Notifications.Infrastructure/Ashraak.Notifications.Infrastructure.csproj" />
+    <Project Path="src/Modules/Notifications/Ashraak.Notifications.Api/Ashraak.Notifications.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Files/">
+    <Project Path="src/Modules/Files/Ashraak.Files.Domain/Ashraak.Files.Domain.csproj" />
+    <Project Path="src/Modules/Files/Ashraak.Files.Application/Ashraak.Files.Application.csproj" />
+    <Project Path="src/Modules/Files/Ashraak.Files.Infrastructure/Ashraak.Files.Infrastructure.csproj" />
+    <Project Path="src/Modules/Files/Ashraak.Files.Api/Ashraak.Files.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Webhooks/">
+    <Project Path="src/Modules/Webhooks/Ashraak.Webhooks.Domain/Ashraak.Webhooks.Domain.csproj" />
+    <Project Path="src/Modules/Webhooks/Ashraak.Webhooks.Application/Ashraak.Webhooks.Application.csproj" />
+    <Project Path="src/Modules/Webhooks/Ashraak.Webhooks.Infrastructure/Ashraak.Webhooks.Infrastructure.csproj" />
+    <Project Path="src/Modules/Webhooks/Ashraak.Webhooks.Api/Ashraak.Webhooks.Api.csproj" />
+  </Folder>
+  <Folder Name="/Modules/ApiKeys/">
+    <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Domain/Ashraak.ApiKeys.Domain.csproj" />
+    <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Application/Ashraak.ApiKeys.Application.csproj" />
+    <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Infrastructure/Ashraak.ApiKeys.Infrastructure.csproj" />
+    <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Api/Ashraak.ApiKeys.Api.csproj" />
+  </Folder>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INFRASTRUCTURE  — shared DB / Redis / Mongo wiring
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/Infrastructure/">
+    <Project Path="src/Infrastructure/Ashraak.Infrastructure.Shared/Ashraak.Infrastructure.Shared.csproj" />
+  </Folder>
+
+  <!-- ═══════════════════════════════════════════════════════
+       API (Gateway)  — registers all modules, entry point
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/API/">
+    <Project Path="src/Host/Ashraak.Api/Ashraak.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.Data.Abstractions/Ashraak.BuildingBlocks.Data.Abstractions.csproj" />
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.Data.Mongo/Ashraak.BuildingBlocks.Data.Mongo.csproj" />
+    <Project Path="src/BuildingBlocks/Ashraak.BuildingBlocks.Data.Sql/Ashraak.BuildingBlocks.Data.Sql.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/" />
+
+  <!-- ═══════════════════════════════════════════════════════
+       TESTS
+       ═══════════════════════════════════════════════════════ -->
+  <Folder Name="/Tests/">
+    <Project Path="tests/Ashraak.SharedKernel.Tests/Ashraak.SharedKernel.Tests.csproj" />
+    <Project Path="tests/Ashraak.Auth.Tests/Ashraak.Auth.Tests.csproj" />
+    <Project Path="tests/Ashraak.Tenant.Tests/Ashraak.Tenant.Tests.csproj" />
+    <Project Path="tests/Ashraak.Users.Tests/Ashraak.Users.Tests.csproj" />
+    <Project Path="tests/Ashraak.Audit.Tests/Ashraak.Audit.Tests.csproj" />
+    <Project Path="tests/Ashraak.Integration.Tests/Ashraak.Integration.Tests.csproj" />
+    <Project Path="tests/Ashraak.Architecture.Tests/Ashraak.Architecture.Tests.csproj" />
+    <Project Path="tests/Ashraak.Webhooks.Tests/Ashraak.Webhooks.Tests.csproj" />
+    <Project Path="tests/Ashraak.ApiKeys.Tests/Ashraak.ApiKeys.Tests.csproj" />
+  </Folder>
+</Solution>

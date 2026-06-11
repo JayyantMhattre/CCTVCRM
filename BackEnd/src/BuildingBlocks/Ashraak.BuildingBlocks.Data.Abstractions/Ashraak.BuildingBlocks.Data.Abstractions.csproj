@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Ashraak.BuildingBlocks.Data.Abstractions</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- SharedKernel provides Entity<TId>, AggregateRoot, IUnitOfWork -->
+    <ProjectReference Include="..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

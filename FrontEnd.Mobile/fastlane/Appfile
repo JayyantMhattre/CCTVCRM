@@ -1,0 +1,9 @@
+# Fastlane Appfile — set via env in CI (no secrets committed).
+app_identifier(ENV["ASHRAAK_APP_IDENTIFIER"] || "com.ashraak.ashraak_mobile")
+apple_id(ENV["FASTLANE_APPLE_ID"] || "apple-id@example.com")
+team_id(ENV["FASTLANE_TEAM_ID"] || "YOUR_TEAM_ID")
+
+# Android package names per flavor (override in lane if needed).
+for_platform :android do
+  package_name(ENV["ASHRAAK_ANDROID_PACKAGE"] || "com.ashraak.ashraak_mobile")
+end

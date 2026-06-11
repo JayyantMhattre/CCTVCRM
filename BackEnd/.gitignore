@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ashraak Backend — .gitignore
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Secrets — NEVER commit these ─────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+# Keep the template
+!.env.example
+
+# ── .NET build output ─────────────────────────────────────────────────────────
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+_ReSharper*/
+*.ncrunchsolution
+TestResults/
+publish/
+
+# ── EF Core migrations snapshot (auto-generated — keep migrations, ignore snapshots if desired)
+# Uncomment if you want to exclude auto-generated model snapshots:
+# *ModelSnapshot.cs
+
+# ── NuGet ─────────────────────────────────────────────────────────────────────
+*.nupkg
+*.snupkg
+.nuget/
+
+# ── Rider / JetBrains ─────────────────────────────────────────────────────────
+.idea/
+*.sln.iml
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store

@@ -1,0 +1,110 @@
+name: Android Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: Build flavor
+        required: true
+        default: qa
+        type: choice
+        options:
+          - dev
+          - qa
+          - uat
+          - prod
+      target:
+        description: Artifact type
+        required: true
+        default: appbundle
+        type: choice
+        options:
+          - apk
+          - appbundle
+  push:
+    tags:
+      - 'mobile/v*'
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Android ${{ inputs.flavor || 'prod' }} release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FrontEnd.Mobile
+    env:
+      FLAVOR: ${{ github.event_name == 'push' && 'prod' || inputs.flavor }}
+      TARGET: ${{ github.event_name == 'push' && 'appbundle' || inputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bootstrap platform + release config
+        shell: bash
+        run: |
+          if [ ! -d android ] || [ ! -d ios ]; then
+            flutter create . --org com.ashraak --project-name ashraak_mobile --platforms=android,ios
+          fi
+          pwsh ../scripts/apply-mobile-release-config.ps1
+
+      - name: Sync version from version.yaml
+        shell: bash
+        run: ../scripts/sync-mobile-version.sh "${{ github.run_number }}"
+
+      - name: Decode Android keystore (optional)
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          mkdir -p android/keystore
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/keystore/ashraak-upload.jks
+          cat > android/key.properties <<EOF
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          storeFile=../keystore/ashraak-upload.jks
+          EOF
+
+      - run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Test
+        run: flutter test
+
+      - name: Build release artifact
+        run: |
+          ../scripts/build-mobile.sh "$FLAVOR" "$TARGET" "${{ github.run_number }}"
+
+      - name: Upload APK
+        if: env.TARGET == 'apk'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashraak-${{ env.FLAVOR }}-apk
+          path: FrontEnd.Mobile/build/app/outputs/flutter-apk/*-release.apk
+
+      - name: Upload AAB
+        if: env.TARGET == 'appbundle'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashraak-${{ env.FLAVOR }}-aab
+          path: FrontEnd.Mobile/build/app/outputs/bundle/*Release/*.aab
+
+      - name: Release summary
+        run: |
+          echo "## Android release" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Flavor | $FLAVOR |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Target | $TARGET |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Build | ${{ github.run_number }} |" >> "$GITHUB_STEP_SUMMARY"

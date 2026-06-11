@@ -1,0 +1,135 @@
+// =============================================================================
+// HexaDash design tokens
+// -----------------------------------------------------------------------------
+// Extracted from the analyzed HexaDash v1.3.0 theme source:
+//   - C:\themeforest\hexadash-react\hexadash-react\src\config\theme\themeVariables.js
+//   - C:\themeforest\hexadash-react\hexadash-react\src\config\theme\themeConfigure.js
+//
+// Values are exposed as CSS custom properties (prefixed `--hd-`) SCOPED to the
+// `.hexadash-theme` wrapper that the HexaDash layout/auth-layout apply at their
+// root. Scoping (rather than `:root`) guarantees these tokens NEVER leak into
+// the active CoreUI theme — importing this stylesheet while CoreUI is active has
+// zero visual effect because no element carries `.hexadash-theme`.
+//
+// Dark mode is driven by `data-hexadash-mode="dark"` on the same wrapper, so the
+// adapter manages its own mode independently of CoreUI's `data-coreui-theme`.
+// =============================================================================
+
+.hexadash-theme {
+  // ── Brand palette ─────────────────────────────────────────────────────────
+  --hd-primary: #8231d3;
+  --hd-primary-hover: #6726a8;
+  --hd-primary-transparent: #f2eafb;
+  --hd-secondary: #5840ff;
+  --hd-secondary-hover: #3520c8;
+
+  // ── State colours ─────────────────────────────────────────────────────────
+  --hd-success: #01b81a;
+  --hd-warning: #fa8b0c;
+  --hd-danger: #ff0f0f;
+  --hd-error: #ff0f0f;
+  --hd-info: #00aaff;
+  --hd-link: #1890ff;
+  --hd-dark: #0a0a0a;
+  --hd-gray: #404040;
+  --hd-light: #747474;
+  --hd-white: #ffffff;
+  --hd-pink: #f63178;
+
+  // ── Typography ────────────────────────────────────────────────────────────
+  --hd-font-family: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --hd-font-size-base: 15px;
+  --hd-heading-color: rgba(0, 0, 0, 0.85);
+  --hd-text-color: #666d92;
+  --hd-text-color-secondary: #404040;
+
+  // ── Surfaces / backgrounds ────────────────────────────────────────────────
+  --hd-body-bg: #f8f9fb;
+  --hd-general-bg: #f4f5f7;
+  --hd-white-bg: #ffffff;
+  --hd-card-bg: #ffffff;
+  --hd-header-bg: #ffffff;
+  --hd-sider-bg: #ffffff;
+  --hd-footer-bg: #fafafa;
+  --hd-input-bg: #ffffff;
+
+  // ── Borders ───────────────────────────────────────────────────────────────
+  --hd-border-light: #f1f2f6;
+  --hd-border-normal: #e3e6ef;
+  --hd-border-deep: #c6d0dc;
+  --hd-border-radius-base: 4px;
+
+  // ── Cards ─────────────────────────────────────────────────────────────────
+  --hd-card-radius: 10px;
+  --hd-card-shadow: 0 5px 20px rgba(146, 153, 184, 0.03);
+  --hd-card-head-padding: 16px;
+  --hd-card-padding: 24px;
+
+  // ── Shadows ───────────────────────────────────────────────────────────────
+  --hd-box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --hd-box-shadow-lg: 0 15px 40px rgba(146, 153, 184, 0.2);
+
+  // ── Layout dimensions ─────────────────────────────────────────────────────
+  --hd-header-height: 64px;
+  --hd-sidebar-width: 280px;
+  --hd-sidebar-narrow-width: 72px;
+
+  // ── Navigation menu ───────────────────────────────────────────────────────
+  --hd-menu-icon-color: #a0a0a0;
+  --hd-menu-active: #8231d3;
+  --hd-menu-active-bg: #f2eafb;
+
+  // ── Inputs ────────────────────────────────────────────────────────────────
+  --hd-input-height: 40px;
+  --hd-input-height-lg: 50px;
+  --hd-input-border: #e3e6ef;
+
+  // ── Tags / badges ─────────────────────────────────────────────────────────
+  --hd-tag-bg: #eff0f3;
+  --hd-tag-color: #0a0a0a;
+  --hd-tag-font-size: 11px;
+
+  // ── Spacing scale (grid gutter base = 25px) ───────────────────────────────
+  --hd-gutter: 25px;
+  --hd-space-xs: 6px;
+  --hd-space-sm: 12px;
+  --hd-space-md: 16px;
+  --hd-space-lg: 24px;
+  --hd-space-xl: 30px;
+
+  // ── Scrollbar ─────────────────────────────────────────────────────────────
+  --hd-scroll-bg: #e3e6ef;
+}
+
+// ── Dark mode overrides ───────────────────────────────────────────────────────
+.hexadash-theme[data-hexadash-mode='dark'] {
+  --hd-heading-color: #e1e1e3;
+  --hd-text-color: #a4a5aa;
+  --hd-text-color-secondary: #a4a5aa;
+
+  --hd-body-bg: #010413;
+  --hd-general-bg: #323541;
+  --hd-white-bg: #1b1e2b;
+  --hd-card-bg: #1b1e2b;
+  --hd-header-bg: #1b1e2b;
+  --hd-sider-bg: #1b1e2b;
+  --hd-footer-bg: #1b1e2b;
+  --hd-input-bg: #282b37;
+
+  --hd-border-light: #282b37;
+  --hd-border-normal: #323541;
+  --hd-border-deep: #070a19;
+
+  --hd-menu-icon-color: #a4a5aa;
+  --hd-menu-active: #ffffff;
+  --hd-menu-active-bg: #282b37;
+
+  --hd-input-border: #494b55;
+  --hd-scroll-bg: #565a65;
+  --hd-tag-bg: #323541;
+  --hd-tag-color: #e1e1e3;
+}
+
+// ── Breakpoints (reference only — consumed by media queries in hexadash.scss) ──
+// $hd-breakpoint-mobile: 991px;   // sidebar overlay below this
+// $hd-breakpoint-tablet: 1200px;  // sidebar auto-collapse below this

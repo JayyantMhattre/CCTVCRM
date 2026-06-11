@@ -1,0 +1,129 @@
+name: Mobile CI
+
+on:
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'FrontEnd.Mobile/**'
+      - '.github/workflows/mobile.yml'
+      - '.github/workflows/android-release.yml'
+      - '.github/workflows/ios-release.yml'
+      - 'scripts/build-mobile.*'
+      - 'scripts/sync-mobile-version.*'
+      - 'scripts/apply-mobile-release-config.ps1'
+      - 'scripts/bootstrap-mobile-platform.ps1'
+      - 'scripts/generate-mobile-sdk.*'
+  push:
+    branches: [main, master]
+    paths:
+      - 'FrontEnd.Mobile/**'
+      - '.github/workflows/mobile.yml'
+      - '.github/workflows/android-release.yml'
+      - '.github/workflows/ios-release.yml'
+      - 'scripts/build-mobile.*'
+      - 'scripts/sync-mobile-version.*'
+      - 'scripts/apply-mobile-release-config.ps1'
+
+concurrency:
+  group: mobile-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-test:
+    name: Flutter analyze & test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: FrontEnd.Mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bootstrap platform folders
+        shell: bash
+        run: |
+          if [ ! -d android ] || [ ! -d ios ]; then
+            flutter create . --org com.ashraak --project-name ashraak_mobile --platforms=android,ios
+          fi
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Test
+        run: flutter test
+
+      - name: Offline & production capability tests
+        run: flutter test test/core/offline test/core/sync test/core/navigation test/core/feature_flags test/core/auth/biometrics test/core/notifications test/shared/widgets/offline_banner_test.dart
+
+  flavor-build-matrix:
+    name: Flavor smoke build (${{ matrix.flavor }})
+    needs: analyze-test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [dev, qa, uat, prod]
+    defaults:
+      run:
+        working-directory: FrontEnd.Mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bootstrap + release config
+        shell: bash
+        run: |
+          if [ ! -d android ] || [ ! -d ios ]; then
+            flutter create . --org com.ashraak --project-name ashraak_mobile --platforms=android,ios
+          fi
+          pwsh ../scripts/apply-mobile-release-config.ps1
+
+      - run: ../scripts/sync-mobile-version.sh
+      - run: flutter pub get
+
+      - name: Build APK (debug, flavor ${{ matrix.flavor }})
+        run: |
+          flutter build apk --debug --flavor ${{ matrix.flavor }} \
+            --dart-define=ENV=${{ matrix.flavor }} \
+            --dart-define=FLAVOR=${{ matrix.flavor }}
+
+  build-ios:
+    name: iOS debug build (no codesign)
+    needs: analyze-test
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: FrontEnd.Mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bootstrap platform folders
+        shell: bash
+        run: |
+          if [ ! -d android ] || [ ! -d ios ]; then
+            flutter create . --org com.ashraak --project-name ashraak_mobile --platforms=android,ios
+          fi
+
+      - run: flutter pub get
+
+      - name: Build iOS dev flavor (no codesign)
+        run: |
+          flutter build ios --debug --no-codesign --flavor dev \
+            --dart-define=ENV=dev --dart-define=FLAVOR=dev

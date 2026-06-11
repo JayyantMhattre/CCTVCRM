@@ -1,0 +1,29 @@
+# Docs-only manual run. Pull request / push validation runs in ci.yml (package audit + build + docs).
+name: Documentation Validation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate documentation accompanies code changes
+        env:
+          # Repository variable DOC_VALIDATE_MODE=fail enforces hard gate (default: warn)
+          DOC_VALIDATE_MODE: ${{ vars.DOC_VALIDATE_MODE || 'warn' }}
+        run: |
+          chmod +x scripts/validate-docs.sh
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            BASE="origin/main"
+          fi
+          ./scripts/validate-docs.sh "$BASE"

@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ashraak — Development Overrides
+#
+# Docker Compose automatically merges this file on top of docker-compose.yml
+# when you run `docker compose up` without specifying a -f flag.
+#
+# Purpose:
+#   - Relax security for developer convenience (open ports, no TLS, verbose logs)
+#   - Build from local source rather than pulling a registry image
+#   - Mount source code for hot-reload (dotnet watch) when desired
+#   - Keep credentials simple/memorable for local use only
+#
+# DO NOT use these overrides in CI/CD or production.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── API — dev build ──────────────────────────────────────────────────────────
+  ashraak-api:
+    build:
+      args:
+        # Build in Debug mode for better stack traces in development.
+        BUILD_CONFIGURATION: Debug
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # Verbose logging for EF Core and ASP.NET Core in dev.
+      Logging__LogLevel__Default:                                 Debug
+      Logging__LogLevel__Microsoft.AspNetCore:                    Information
+      Logging__LogLevel__Microsoft.EntityFrameworkCore.Database.Command: Information
+
+      # Use simple plaintext passwords for development only.
+      POSTGRES_PASSWORD: ashraak_dev
+      MONGO_PASSWORD: ashraak_dev
+      RABBITMQ_PASSWORD: ashraak_dev
+      REDIS_PASSWORD: ""
+
+    # Bind-mount the published app for fast iteration without a full rebuild.
+    # Uncomment if you run `dotnet watch` inside the container.
+    # volumes:
+    #   - ./src:/src:delegated
+
+  # ── PostgreSQL — dev settings ────────────────────────────────────────────────
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ashraak_dev
+
+  # ── MongoDB — dev settings ───────────────────────────────────────────────────
+  mongodb:
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: ashraak_dev
+
+  # ── RabbitMQ — dev settings ──────────────────────────────────────────────────
+  rabbitmq:
+    environment:
+      RABBITMQ_DEFAULT_PASS: ashraak_dev

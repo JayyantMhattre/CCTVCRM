@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Ashraak.Webhooks.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Modules\Webhooks\Ashraak.Webhooks.Application\Ashraak.Webhooks.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\Ashraak.Webhooks.Domain\Ashraak.Webhooks.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Webhooks\Ashraak.Webhooks.Infrastructure\Ashraak.Webhooks.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

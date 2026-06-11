@@ -1,0 +1,48 @@
+---
+description: Angular and TypeScript coding standards per Angular Style Guide
+globs: ["**/*.ts", "**/*.html", "**/*.scss", "angular.json"]
+alwaysApply: true
+---
+
+# Angular / TypeScript Standards
+
+Follow the Angular Official Style Guide (angular.dev/style-guide) and Google TypeScript Style Guide.
+
+## Components
+- Standalone components by default (Angular 14+)
+- One component per file
+- ChangeDetectionStrategy.OnPush on every component
+- Prefix selectors: app-feature-name
+- Keep templates simple — no complex logic in HTML
+- Use @if, @for, @switch (Angular 17+ control flow) not *ngIf, *ngFor
+
+## Signals (Angular 17+)
+- Use signal() for local component state
+- Use computed() for derived state
+- Use effect() sparingly — only for side effects
+- Use input() and output() instead of @Input()/@Output() decorators
+
+## Dependency Injection
+- Use inject() function, not constructor injection
+- Mark injected services as readonly private
+
+## Observables
+- Always use async pipe in templates
+- Use takeUntilDestroyed() for manual subscriptions
+- Never subscribe inside subscribe (use switchMap, mergeMap etc.)
+
+## TypeScript
+- strict mode always on
+- Never use `any` — use unknown and narrow, or define proper interfaces
+- Define interfaces for all API response models
+- Use readonly for arrays and objects that should not be mutated
+
+## Templates
+- Always use trackBy with @for / *ngFor
+- No inline styles in templates
+- Keep template expressions simple — compute in component class
+
+## Services
+- Business logic lives in services, not components
+- Services are singleton unless scoped intentionally
+- Use HttpClient with typed generics: http.get<MyModel[]>(...)

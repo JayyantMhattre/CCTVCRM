@@ -1,0 +1,99 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ashraak — Production Overrides
+#
+# Apply on top of docker-compose.yml:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Key differences from development:
+#   - No source bind-mounts; image built from the registry or CI artifact.
+#   - Resource limits (CPU + memory) on all containers.
+#   - Containers restart automatically on failure.
+#   - Infrastructure ports NOT exposed on the host — only the API is reachable.
+#     A reverse proxy (nginx / Traefik / AWS ALB) should sit in front.
+#   - Redis requires a password; MongoDB requires TLS (configure separately).
+#   - Seq admin password hash is required (no anonymous access).
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Ashraak API ──────────────────────────────────────────────────────────────
+  ashraak-api:
+    # Pull from a pre-built registry image in CI/CD rather than building here.
+    # image: ghcr.io/yourorg/ashraak-api:${API_VERSION:-latest}
+    build:
+      args:
+        BUILD_CONFIGURATION: Release
+    restart: always
+
+    deploy:
+      resources:
+        limits:
+          cpus:   "1.0"
+          memory: 512M
+        reservations:
+          cpus:   "0.25"
+          memory: 256M
+
+    # In production the API should ONLY be reachable via the reverse proxy.
+    # Remove the host port binding; let the proxy communicate on the Docker network.
+    ports: !reset []  # Clear the ports from base compose
+
+    # Expose internally so the proxy can reach it.
+    expose:
+      - "8080"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Logging__LogLevel__Default:              Warning
+      Logging__LogLevel__Microsoft.AspNetCore: Warning
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  postgres:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus:   "1.0"
+          memory: 1G
+        reservations:
+          memory: 256M
+    # Do NOT expose PostgreSQL to the host in production.
+    ports: !reset []
+
+  # ── Redis ─────────────────────────────────────────────────────────────────────
+  redis:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus:   "0.5"
+          memory: 512M
+    # Redis MUST have a strong password in production — set REDIS_PASSWORD in .env
+    ports: !reset []
+
+  # ── MongoDB ───────────────────────────────────────────────────────────────────
+  mongodb:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus:   "0.5"
+          memory: 512M
+    ports: !reset []
+
+  # ── RabbitMQ ──────────────────────────────────────────────────────────────────
+  rabbitmq:
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus:   "0.5"
+          memory: 256M
+    # Disable the management UI port in production (or protect it via VPN/proxy).
+    ports: !reset []
+
+  # ── Seq ───────────────────────────────────────────────────────────────────────
+  seq:
+    restart: always
+    # Seq UI should NOT be publicly accessible — put it behind a VPN or proxy.
+    ports: !reset []

@@ -1,0 +1,30 @@
+# Exclude build output — Docker rebuilds these from source
+**/bin/
+**/obj/
+
+# Git internals
+.git/
+.gitignore
+
+# IDE / editor files
+.vs/
+.vscode/
+**/.idea/
+**/*.user
+**/*.suo
+
+# Test projects — not needed in the production image
+tests/
+
+# Local env secrets — NEVER copy into the image
+.env
+.env.*
+!.env.example
+
+# Documentation
+**/*.md
+**/*.txt
+
+# Docker files themselves (already in context, but exclude to keep image lean)
+Dockerfile
+docker-compose*.yml

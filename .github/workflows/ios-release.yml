@@ -1,0 +1,87 @@
+name: iOS Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: Build flavor
+        required: true
+        default: qa
+        type: choice
+        options:
+          - dev
+          - qa
+          - uat
+          - prod
+  push:
+    tags:
+      - 'mobile/ios/v*'
+
+concurrency:
+  group: ios-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: iOS ${{ inputs.flavor || 'prod' }} release
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: FrontEnd.Mobile
+    env:
+      FLAVOR: ${{ github.event_name == 'push' && 'prod' || inputs.flavor }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bootstrap platform
+        shell: bash
+        run: |
+          if [ ! -d android ] || [ ! -d ios ]; then
+            flutter create . --org com.ashraak --project-name ashraak_mobile --platforms=android,ios
+          fi
+
+      - name: Sync version
+        run: ../scripts/sync-mobile-version.sh "${{ github.run_number }}"
+
+      - run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Test
+        run: flutter test
+
+      - name: Build iOS (release, no codesign for CI artifact)
+        run: |
+          flutter build ios --release --no-codesign \
+            --flavor "$FLAVOR" \
+            --dart-define=ENV="$FLAVOR" \
+            --dart-define=FLAVOR="$FLAVOR" \
+            --dart-define=APP_BUILD_NUMBER="${{ github.run_number }}"
+
+      - name: Build IPA (optional — requires signing secrets + match)
+        continue-on-error: true
+        run: |
+          echo "For signed IPA upload, configure IOS_* secrets and run fastlane ios testflight locally or in a protected environment"
+          ../scripts/build-mobile.sh "$FLAVOR" ipa "${{ github.run_number }}" || true
+
+      - name: Upload iOS build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashraak-${{ env.FLAVOR }}-ios
+          path: |
+            FrontEnd.Mobile/build/ios/iphoneos/Runner.app
+            FrontEnd.Mobile/build/ios/ipa/*.ipa
+          if-no-files-found: warn
+
+      - name: Release summary
+        run: |
+          echo "## iOS release" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Flavor | $FLAVOR |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Build | ${{ github.run_number }} |" >> "$GITHUB_STEP_SUMMARY"

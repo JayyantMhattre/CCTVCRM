@@ -1,0 +1,7 @@
+Subject: Welcome to Ashraak
+Hello {{DisplayName}},
+
+Your account is ready. Tenant: {{TenantId}}.
+
+Thanks,
+Ashraak Platform

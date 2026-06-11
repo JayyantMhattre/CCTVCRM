@@ -1,0 +1,413 @@
+// =============================================================================
+// HexaDash adapter skin
+// -----------------------------------------------------------------------------
+// Visual styling for the HexaDash theme adapter. Implements the HexaDash design
+// language using CoreUI/Bootstrap-compatible primitives + the extracted tokens
+// (NO Ant Design, NO new runtime dependency). Everything is scoped under
+// `.hexadash-theme`, so this file is inert while CoreUI is the active theme.
+//
+// Breakpoints mirror HexaDash: 991px (mobile overlay), 1200px (auto-collapse).
+// =============================================================================
+
+@use './tokens/hexadash.tokens.scss';
+
+$hd-breakpoint-mobile: 991px;
+$hd-breakpoint-tablet: 1200px;
+
+.hexadash-theme {
+  font-family: var(--hd-font-family);
+  font-size: var(--hd-font-size-base);
+  color: var(--hd-text-color);
+  background: var(--hd-body-bg);
+  min-height: 100vh;
+
+  // ── Shell ──────────────────────────────────────────────────────────────────
+  .hexadash-shell {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .hexadash-sidebar {
+    width: var(--hd-sidebar-width);
+    flex-shrink: 0;
+    background: var(--hd-sider-bg);
+    border-right: 1px solid var(--hd-border-light);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1045;
+    transition: transform 0.25s ease, width 0.25s ease;
+
+    &.hexadash-sidebar-narrow {
+      width: var(--hd-sidebar-narrow-width);
+    }
+
+    @media (max-width: $hd-breakpoint-mobile) {
+      transform: translateX(-100%);
+
+      &.hexadash-sidebar-open {
+        transform: translateX(0);
+        box-shadow: var(--hd-box-shadow-lg);
+      }
+    }
+  }
+
+  .hexadash-sidebar-brand {
+    height: var(--hd-header-height);
+    display: flex;
+    align-items: center;
+    gap: var(--hd-space-sm);
+    padding: 0 var(--hd-space-lg);
+    border-bottom: 1px solid var(--hd-border-light);
+    color: var(--hd-heading-color);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .hexadash-sidebar-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: var(--hd-space-md) 0;
+  }
+
+  .hexadash-sidebar-footer {
+    border-top: 1px solid var(--hd-border-light);
+    padding: var(--hd-space-md) var(--hd-space-lg);
+  }
+
+  .hexadash-main {
+    flex: 1 1 auto;
+    margin-left: var(--hd-sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transition: margin-left 0.25s ease;
+
+    &.hexadash-main-narrow {
+      margin-left: var(--hd-sidebar-narrow-width);
+    }
+
+    @media (max-width: $hd-breakpoint-mobile) {
+      margin-left: 0;
+    }
+  }
+
+  .hexadash-header {
+    height: var(--hd-header-height);
+    background: var(--hd-header-bg);
+    border-bottom: 1px solid var(--hd-border-light);
+    display: flex;
+    align-items: center;
+    gap: var(--hd-space-md);
+    padding: 0 var(--hd-space-lg);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+  }
+
+  .hexadash-content {
+    flex: 1 1 auto;
+    padding: var(--hd-space-xl) var(--hd-space-lg);
+  }
+
+  .hexadash-footer {
+    background: var(--hd-footer-bg);
+    border-top: 1px solid var(--hd-border-light);
+    padding: var(--hd-space-md) var(--hd-space-lg);
+    color: var(--hd-text-color);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .hexadash-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(1, 4, 19, 0.45);
+    z-index: 1040;
+  }
+
+  // ── Navigation ───────────────────────────────────────────────────────────
+  .hexadash-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hexadash-nav-title {
+    padding: var(--hd-space-md) var(--hd-space-lg) var(--hd-space-xs);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hd-text-color);
+    opacity: 0.6;
+  }
+
+  .hexadash-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--hd-space-sm);
+    padding: 10px var(--hd-space-lg);
+    margin: 2px var(--hd-space-sm);
+    border-radius: var(--hd-border-radius-base);
+    color: var(--hd-text-color);
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    .hexadash-nav-icon {
+      color: var(--hd-menu-icon-color);
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover {
+      background: var(--hd-menu-active-bg);
+      color: var(--hd-menu-active);
+    }
+
+    &.active {
+      background: var(--hd-menu-active-bg);
+      color: var(--hd-menu-active);
+      font-weight: 600;
+
+      .hexadash-nav-icon {
+        color: var(--hd-menu-active);
+      }
+    }
+  }
+
+  .hexadash-nav-divider {
+    height: 1px;
+    margin: var(--hd-space-sm) var(--hd-space-lg);
+    background: var(--hd-border-light);
+    list-style: none;
+  }
+
+  // ── Card ─────────────────────────────────────────────────────────────────
+  .hexadash-card {
+    background: var(--hd-card-bg);
+    border: 1px solid var(--hd-border-light);
+    border-radius: var(--hd-card-radius);
+    box-shadow: var(--hd-card-shadow);
+  }
+
+  .hexadash-card-header {
+    padding: var(--hd-card-head-padding) var(--hd-card-padding);
+    border-bottom: 1px solid var(--hd-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--hd-heading-color);
+    font-weight: 600;
+  }
+
+  .hexadash-card-body {
+    padding: var(--hd-card-padding);
+  }
+
+  .hexadash-card-footer {
+    padding: var(--hd-space-md) var(--hd-card-padding);
+    border-top: 1px solid var(--hd-border-light);
+  }
+
+  // ── Table ────────────────────────────────────────────────────────────────
+  .hexadash-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead th {
+      background: var(--hd-general-bg);
+      color: var(--hd-heading-color);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 14px var(--hd-space-md);
+      border-bottom: 1px solid var(--hd-border-normal);
+      text-align: left;
+    }
+
+    tbody td {
+      padding: 14px var(--hd-space-md);
+      border-bottom: 1px solid var(--hd-border-light);
+      color: var(--hd-text-color);
+    }
+
+    tbody tr:hover {
+      background: var(--hd-primary-transparent);
+    }
+  }
+
+  // ── Badge / tag ────────────────────────────────────────────────────────────
+  .hexadash-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: var(--hd-border-radius-base);
+    font-size: var(--hd-tag-font-size);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--hd-white);
+
+    &.hexadash-badge-pill {
+      border-radius: 50rem;
+    }
+
+    &.hexadash-badge-primary { background: var(--hd-primary); }
+    &.hexadash-badge-secondary { background: var(--hd-secondary); }
+    &.hexadash-badge-success { background: var(--hd-success); }
+    &.hexadash-badge-danger { background: var(--hd-danger); }
+    &.hexadash-badge-warning { background: var(--hd-warning); color: var(--hd-dark); }
+    &.hexadash-badge-info { background: var(--hd-info); color: var(--hd-dark); }
+    &.hexadash-badge-light { background: var(--hd-tag-bg); color: var(--hd-tag-color); }
+    &.hexadash-badge-dark { background: var(--hd-dark); }
+  }
+
+  // ── Avatar ───────────────────────────────────────────────────────────────
+  .hexadash-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--hd-primary);
+    color: var(--hd-white);
+    font-weight: 600;
+    flex-shrink: 0;
+    object-fit: cover;
+
+    &.hexadash-avatar-sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
+    &.hexadash-avatar-md { width: 2.5rem; height: 2.5rem; font-size: 0.9rem; }
+    &.hexadash-avatar-lg { width: 3.5rem; height: 3.5rem; font-size: 1.25rem; }
+  }
+
+  // ── Tabs ─────────────────────────────────────────────────────────────────
+  .hexadash-tabs-strip {
+    display: flex;
+    gap: var(--hd-space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--hd-border-light);
+  }
+
+  .hexadash-tab {
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 12px 15px;
+    color: var(--hd-text-color);
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover:not(:disabled) { color: var(--hd-primary); }
+
+    &.active {
+      color: var(--hd-primary);
+      border-bottom-color: var(--hd-primary);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .hexadash-tab-content {
+    padding-top: var(--hd-space-md);
+  }
+
+  // ── Breadcrumb ─────────────────────────────────────────────────────────────
+  .hexadash-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--hd-space-xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+
+    .hexadash-breadcrumb-item {
+      display: flex;
+      align-items: center;
+
+      &:not(:first-child)::before {
+        content: '/';
+        margin-right: var(--hd-space-xs);
+        color: var(--hd-light);
+      }
+
+      a {
+        color: var(--hd-primary);
+        text-decoration: none;
+
+        &:hover { color: var(--hd-primary-hover); }
+      }
+
+      &.active {
+        color: var(--hd-text-color-secondary);
+      }
+    }
+  }
+
+  // ── Chart frame ────────────────────────────────────────────────────────────
+  .hexadash-chart {
+    background: var(--hd-card-bg);
+    border: 1px solid var(--hd-border-light);
+    border-radius: var(--hd-card-radius);
+    box-shadow: var(--hd-card-shadow);
+    margin: 0;
+
+    .hexadash-chart-title {
+      padding: var(--hd-card-head-padding) var(--hd-card-padding);
+      border-bottom: 1px solid var(--hd-border-light);
+      font-weight: 600;
+      color: var(--hd-heading-color);
+    }
+
+    .hexadash-chart-body {
+      padding: var(--hd-card-padding);
+    }
+
+    .hexadash-chart-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hd-light);
+      font-size: 0.85rem;
+    }
+  }
+
+  // ── Auth shell ─────────────────────────────────────────────────────────────
+  &.hexadash-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--hd-space-lg);
+    background: linear-gradient(135deg, var(--hd-primary-transparent) 0%, var(--hd-body-bg) 100%);
+  }
+
+  .hexadash-auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--hd-card-bg);
+    border-radius: var(--hd-card-radius);
+    box-shadow: var(--hd-box-shadow-lg);
+    padding: var(--hd-space-xl);
+  }
+
+  .hexadash-brand-mark {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--hd-card-radius);
+    background: var(--hd-primary);
+    color: var(--hd-white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+}

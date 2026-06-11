@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Ashraak.ApiKeys.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Modules\ApiKeys\Ashraak.ApiKeys.Application\Ashraak.ApiKeys.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\ApiKeys\Ashraak.ApiKeys.Domain\Ashraak.ApiKeys.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\ApiKeys\Ashraak.ApiKeys.Infrastructure\Ashraak.ApiKeys.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

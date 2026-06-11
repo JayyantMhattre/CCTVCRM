@@ -1,0 +1,5 @@
+# Single source of truth for mobile app versioning (M5).
+# Sync to pubspec.yaml and native projects: scripts/sync-mobile-version.ps1
+name: ashraak_mobile
+version: 1.0.0
+build: 1

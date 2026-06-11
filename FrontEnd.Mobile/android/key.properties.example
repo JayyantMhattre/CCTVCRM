@@ -1,0 +1,5 @@
+# Copy to key.properties (gitignored). Used for release signing locally and in CI via secrets.
+storePassword=your-store-password
+keyPassword=your-key-password
+keyAlias=ashraak-upload
+storeFile=../keystore/ashraak-upload.jks

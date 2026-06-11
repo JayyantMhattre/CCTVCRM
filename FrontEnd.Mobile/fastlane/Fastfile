@@ -1,0 +1,72 @@
+# Ashraak mobile — one-command release lanes (M5).
+# Run from FrontEnd.Mobile/: bundle exec fastlane android beta
+
+default_platform(:android)
+
+FLAVORS = %w[dev qa uat prod].freeze
+
+def dart_defines(flavor)
+  [
+    "--dart-define=ENV=#{flavor}",
+    "--dart-define=FLAVOR=#{flavor}",
+    "--dart-define=ENABLE_FCM=#{flavor == 'dev' ? 'false' : 'true'}",
+    "--dart-define=APP_BUILD_NUMBER=#{ENV['BUILD_NUMBER'] || '1'}"
+  ].join(" ")
+end
+
+def flutter_prepare
+  sh("cd .. && flutter pub get")
+end
+
+platform :android do
+  desc "Build release APK for flavor (default: qa)"
+  lane :build do |options|
+    flavor = (options[:flavor] || ENV["FLAVOR"] || "qa").to_s
+    UI.user_error!("Invalid flavor") unless FLAVORS.include?(flavor)
+    flutter_prepare
+    sh("cd .. && flutter build apk --release --flavor #{flavor} #{dart_defines(flavor)}")
+  end
+
+  desc "Build release AAB for Play Store"
+  lane :build_bundle do |options|
+    flavor = (options[:flavor] || ENV["FLAVOR"] || "prod").to_s
+    flutter_prepare
+    sh("cd .. && flutter build appbundle --release --flavor #{flavor} #{dart_defines(flavor)}")
+  end
+
+  desc "Upload to internal testing (Firebase App Distribution or Play internal track)"
+  lane :beta do |options|
+    build_bundle(flavor: options[:flavor] || "qa")
+    UI.message("Upload AAB via Play Console or Firebase App Distribution plugin")
+    # Optional: upload_to_play_store(track: 'internal', aab: '../build/app/outputs/bundle/...')
+  end
+
+  desc "Production Play Store release"
+  lane :production do |options|
+    build_bundle(flavor: "prod")
+    UI.message("Promote to production track after UAT sign-off")
+  end
+end
+
+platform :ios do
+  desc "Build iOS release for flavor"
+  lane :build do |options|
+    flavor = (options[:flavor] || ENV["FLAVOR"] || "qa").to_s
+    flutter_prepare
+    sh("cd .. && flutter build ios --release --flavor #{flavor} #{dart_defines(flavor)}")
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :testflight do |options|
+    flavor = (options[:flavor] || "qa").to_s
+    build(flavor: flavor)
+    UI.message("Archive and upload via match + deliver when certificates configured")
+    # gym + pilot when signing secrets available
+  end
+
+  desc "App Store production release"
+  lane :production do
+    build(flavor: "prod")
+    UI.message("Submit for App Store review after UAT sign-off")
+  end
+end

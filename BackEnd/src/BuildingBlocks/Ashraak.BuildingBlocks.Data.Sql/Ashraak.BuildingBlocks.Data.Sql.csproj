@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Ashraak.BuildingBlocks.Data.Sql</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- EF Core providers — each is optional; only the chosen provider's package
+         needs to be present at runtime.  Reference all here so the single build
+         output contains every provider assembly; the DI configuration selects
+         the active provider at startup via DatabaseOptions:Provider. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" />
+
+    <!-- IConfiguration.Bind() extension -->
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+
+    <!-- Dapper + provider-specific ADO.NET drivers for raw SQL execution -->
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="MySqlConnector" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.BuildingBlocks.Data.Abstractions\Ashraak.BuildingBlocks.Data.Abstractions.csproj" />
+    <!-- SharedKernel is pulled transitively via Abstractions but referenced
+         explicitly so ITenantContext (from SharedKernel.Contracts) is visible. -->
+    <ProjectReference Include="..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

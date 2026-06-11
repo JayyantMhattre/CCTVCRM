@@ -1,0 +1,242 @@
+{
+  "$schema": "doc-validation-v1",
+  "mode": "warn",
+  "comment": "mode: warn | fail — override with DOC_VALIDATE_MODE env or --mode flag",
+  "excludePaths": [
+    "**/tests/**",
+    "**/*.Tests/**",
+    "**/bin/**",
+    "**/obj/**",
+    "**/.git/**",
+    "**/node_modules/**"
+  ],
+  "mappings": [
+    {
+      "name": "auth",
+      "codePaths": ["BackEnd/src/Modules/Auth/"],
+      "docPaths": ["docs/modules/auth/", "docs/api/auth.md", "docs/modules/invitations/", "docs/modules/auth/mfa/", "docs/modules/auth/sessions/"]
+    },
+    {
+      "name": "tenant",
+      "codePaths": ["BackEnd/src/Modules/Tenant/"],
+      "docPaths": ["docs/modules/tenant/", "docs/api/tenant.md"]
+    },
+    {
+      "name": "users",
+      "codePaths": ["BackEnd/src/Modules/Users/"],
+      "docPaths": ["docs/modules/users/", "docs/api/users.md"]
+    },
+    {
+      "name": "audit",
+      "codePaths": ["BackEnd/src/Modules/Audit/"],
+      "docPaths": ["docs/modules/audit/", "docs/api/audit.md", "docs/modules/audit/security-events/"]
+    },
+    {
+      "name": "files",
+      "codePaths": ["BackEnd/src/Modules/Files/", "BackEnd/src/Shared/Ashraak.SharedKernel.Contracts/Storage/"],
+      "docPaths": ["docs/modules/files/", "docs/adr/ADR-0011-files-storage-module.md"]
+    },
+    {
+      "name": "notifications",
+      "codePaths": ["BackEnd/src/Modules/Notifications/"],
+      "docPaths": ["docs/modules/notifications/"]
+    },
+    {
+      "name": "outbox-platform",
+      "codePaths": [
+        "BackEnd/src/BuildingBlocks/Ashraak.BuildingBlocks.Infrastructure/Outbox/",
+        "BackEnd/src/Host/Ashraak.Api/Extensions/OutboxExtensions.cs"
+      ],
+      "docPaths": ["docs/platform/outbox/", "docs/architecture/outbox.md"]
+    },
+    {
+      "name": "caching",
+      "codePaths": ["BackEnd/src/Modules/Caching/"],
+      "docPaths": ["docs/modules/caching/"]
+    },
+    {
+      "name": "shared-kernel",
+      "codePaths": ["BackEnd/src/Shared/"],
+      "docPaths": ["docs/modules/shared-kernel/"]
+    },
+    {
+      "name": "building-blocks",
+      "codePaths": ["BackEnd/src/BuildingBlocks/"],
+      "docPaths": ["docs/modules/building-blocks/"]
+    },
+    {
+      "name": "package-governance",
+      "codePaths": [
+        "BackEnd/Directory.Packages.props",
+        "BackEnd/global.json",
+        "scripts/package-audit.ps1"
+      ],
+      "docPaths": ["docs/platform/packages/"]
+    },
+    {
+      "name": "host",
+      "codePaths": [
+        "BackEnd/src/Host/",
+        "BackEnd/src/Host/Ashraak.Api/Program.cs",
+        "BackEnd/src/Host/Ashraak.Api/Extensions/",
+        "BackEnd/src/Host/Ashraak.Api/Middleware/",
+        "BackEnd/src/Shared/Ashraak.SharedKernel.Contracts/FeatureFlags/"
+      ],
+      "docPaths": [
+        "docs/modules/host/",
+        "docs/architecture/",
+        "docs/operations/",
+        "docs/platform/rate-limits/",
+        "docs/platform/correlation/",
+        "docs/platform/health/",
+        "docs/platform/configuration/",
+        "docs/platform/feature-flags/",
+        "docs/adr/ADR-0008-host-platform-hardening.md"
+      ]
+    },
+    {
+      "name": "frontend-core",
+      "codePaths": ["FrontEnd/apps/web/src/core/"],
+      "docPaths": ["docs/frontend/"]
+    },
+    {
+      "name": "frontend-features",
+      "codePaths": ["FrontEnd/apps/web/src/modules/"],
+      "docPaths": ["docs/frontend/", "docs/api/"]
+    },
+    {
+      "name": "frontend-layouts",
+      "codePaths": ["FrontEnd/apps/web/src/layouts/"],
+      "docPaths": ["docs/frontend/"]
+    },
+    {
+      "name": "mobile-platform",
+      "codePaths": [
+        "FrontEnd.Mobile/lib/",
+        "FrontEnd.Mobile/test/",
+        "FrontEnd.Mobile/pubspec.yaml",
+        "scripts/bootstrap-mobile-platform.ps1",
+        "scripts/generate-mobile-sdk.ps1",
+        "scripts/generate-mobile-sdk.sh",
+        "scripts/sync-mobile-version.ps1",
+        "scripts/build-mobile.ps1",
+        "scripts/apply-mobile-release-config.ps1",
+        "FrontEnd.Mobile/version.yaml",
+        "FrontEnd.Mobile/fastlane/",
+        "FrontEnd.Mobile/store-assets/",
+        ".github/workflows/mobile.yml",
+        ".github/workflows/android-release.yml",
+        ".github/workflows/ios-release.yml"
+      ],
+      "docPaths": [
+        "docs/mobile/",
+        "docs/mobile/modules/",
+        "docs/adr/ADR-0012-flutter-mobile-platform.md",
+        "docs/adr/ADR-Mobile-0001-state-management.md",
+        "docs/adr/ADR-Mobile-0002-navigation.md",
+        "docs/adr/ADR-Mobile-0003-environment-configuration.md",
+        "docs/adr/ADR-Mobile-0004-secure-token-storage.md",
+        "docs/adr/ADR-Mobile-0005-openapi-sdk-generation.md",
+        "docs/adr/ADR-Mobile-0006-push-notifications.md",
+        "docs/adr/ADR-Mobile-0007-offline-cache.md",
+        "docs/adr/ADR-Mobile-0008-crash-reporting.md",
+        "docs/adr/ADR-Mobile-0009-analytics.md",
+        "docs/adr/ADR-Mobile-0010-release-strategy.md",
+        "docs/adr/ADR-Mobile-0011-versioning-strategy.md",
+        "docs/adr/ADR-Mobile-0012-signing-strategy.md"
+      ]
+    },
+    {
+      "name": "webhooks",
+      "codePaths": [
+        "BackEnd/src/Modules/Webhooks/",
+        "BackEnd/src/Shared/Ashraak.SharedKernel.Contracts/Webhooks/",
+        "BackEnd/tests/Ashraak.Webhooks.Tests/"
+      ],
+      "docPaths": [
+        "docs/modules/webhooks/",
+        "docs/adr/ADR-Webhook-0001-webhook-platform-architecture.md",
+        "docs/adr/ADR-Webhook-0002-webhook-secret-storage.md",
+        "docs/adr/ADR-Webhook-0003-webhook-delivery-engine.md",
+        "docs/adr/ADR-Webhook-0004-webhook-retry-and-dlq.md"
+      ]
+    },
+    {
+      "name": "webhooks-admin-ui",
+      "codePaths": [
+        "FrontEnd/apps/web/src/modules/webhooks/"
+      ],
+      "docPaths": [
+        "docs/modules/webhooks/admin-ui/"
+      ]
+    },
+    {
+      "name": "webhooks-mobile",
+      "codePaths": [
+        "FrontEnd.Mobile/lib/features/webhooks/"
+      ],
+      "docPaths": [
+        "docs/mobile/modules/webhooks/"
+      ]
+    },
+    {
+      "name": "apikeys",
+      "codePaths": [
+        "BackEnd/src/Modules/ApiKeys/",
+        "BackEnd/tests/Ashraak.ApiKeys.Tests/"
+      ],
+      "docPaths": [
+        "docs/modules/apikeys/",
+        "docs/adr/ADR-ApiKeys-0001-api-keys-platform.md"
+      ]
+    },
+    {
+      "name": "apikeys-admin-ui",
+      "codePaths": [
+        "FrontEnd/apps/web/src/modules/apikeys/"
+      ],
+      "docPaths": [
+        "docs/modules/apikeys/admin-ui/"
+      ]
+    },
+    {
+      "name": "platform-v1",
+      "codePaths": [
+        "BackEnd/src/Modules/",
+        "FrontEnd/apps/web/src/",
+        "FrontEnd.Mobile/lib/"
+      ],
+      "docPaths": [
+        "docs/platform/platform-manifest.md"
+      ]
+    },
+    {
+      "name": "apikeys-mobile",
+      "codePaths": [
+        "FrontEnd.Mobile/lib/features/apikeys/"
+      ],
+      "docPaths": [
+        "docs/mobile/modules/apikeys/"
+      ]
+    },
+    {
+      "name": "frontend-shared-ui",
+      "codePaths": [
+        "FrontEnd/apps/web/src/shared/ui/",
+        "FrontEnd/apps/web/src/shared/errors/",
+        "FrontEnd/apps/web/src/shared/file-upload/",
+        "FrontEnd/apps/web/src/shared/components/CorrelationIdCopy.tsx"
+      ],
+      "docPaths": [
+        "docs/frontend/toasts/",
+        "docs/frontend/errors/",
+        "docs/frontend/correlation-support/",
+        "docs/frontend/file-upload/"
+      ]
+    }
+  ],
+  "hostOnlyPaths": {
+    "codePaths": ["BackEnd/docker-compose", "BackEnd/Dockerfile", "BackEnd/.env.example"],
+    "docPaths": ["docs/getting-started/docker-setup.md", "docs/getting-started/environment-variables.md", "docs/operations/", "BackEnd/DOCKER_ENVIRONMENT.md"]
+  }
+}

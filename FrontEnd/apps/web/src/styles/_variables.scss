@@ -1,0 +1,55 @@
+// ============================================================================
+// CoreUI / Bootstrap SCSS Variable Overrides for the Ashraak platform.
+//
+// These values are passed to @coreui/coreui via the `with (...)` clause in
+// coreui.scss.  Only values that differ from CoreUI's defaults are listed here.
+//
+// Reference:
+//   https://coreui.io/docs/customize/sass/
+//   node_modules/@coreui/coreui/scss/_variables.scss
+// ============================================================================
+
+// ── Brand colours ─────────────────────────────────────────────────────────
+
+/// Primary accent — Ashraak indigo-blue.
+$primary:   #3b5fc0;
+
+/// Used for success states (form validation, status badges, etc.)
+$success:   #2eb85c;
+
+/// Danger / destructive actions.
+$danger:    #e55353;
+
+/// Warning states.
+$warning:   #f9b115;
+
+/// Info states.
+$info:      #3399ff;
+
+// ── Sidebar ────────────────────────────────────────────────────────────────
+
+/// Default width of the expanded sidebar.
+$sidebar-width:                         16rem;
+
+/// Width when sidebar is in narrow / icon-only mode.
+$sidebar-narrow-width:                  4rem;
+
+/// CoreUI uses CSS custom properties; these Sass vars seed the initial values.
+$sidebar-brand-height:                  4rem;
+
+// ── Typography ─────────────────────────────────────────────────────────────
+
+/// Base font — system-ui stack for maximum performance (no web-font load).
+$font-family-sans-serif:
+  "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+  "Noto Sans", "Liberation Sans", Arial, sans-serif;
+
+$font-size-base:                        0.9375rem; // ≈ 15px
+
+// ── Layout ─────────────────────────────────────────────────────────────────
+
+/// Suppress deprecation warnings from CoreUI's SCSS internals.
+$enable-deprecation-messages:           false;
+
+/// Keep smooth CSS transitions enabled.
+$enable-transitions:                    true;

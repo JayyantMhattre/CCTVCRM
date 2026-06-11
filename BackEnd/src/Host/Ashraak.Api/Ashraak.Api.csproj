@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.AspNetCore.OutputCaching.StackExchangeRedis" />
+    <PackageReference Include="Scalar.AspNetCore" />
+    <PackageReference Include="Asp.Versioning.Http" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.Seq" />
+    <PackageReference Include="Serilog.Enrichers.Environment" />
+    <PackageReference Include="Serilog.Enrichers.Thread" />
+    <PackageReference Include="OpenTelemetry.Api" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" />
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <!-- BuildingBlocks -->
+    <ProjectReference Include="..\..\BuildingBlocks\Ashraak.BuildingBlocks.Application\Ashraak.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Ashraak.BuildingBlocks.EventBus\Ashraak.BuildingBlocks.EventBus.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Ashraak.BuildingBlocks.Infrastructure\Ashraak.BuildingBlocks.Infrastructure.csproj" />
+    <!-- Shared Infrastructure -->
+    <ProjectReference Include="..\..\Infrastructure\Ashraak.Infrastructure.Shared\Ashraak.Infrastructure.Shared.csproj" />
+    <!-- Module Infrastructure (for DI registration) -->
+    <ProjectReference Include="..\..\Modules\Auth\Ashraak.Auth.Infrastructure\Ashraak.Auth.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Auth\Ashraak.Auth.Api\Ashraak.Auth.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Tenant\Ashraak.Tenant.Infrastructure\Ashraak.Tenant.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Tenant\Ashraak.Tenant.Api\Ashraak.Tenant.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Users\Ashraak.Users.Infrastructure\Ashraak.Users.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Users\Ashraak.Users.Api\Ashraak.Users.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Audit\Ashraak.Audit.Infrastructure\Ashraak.Audit.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Audit\Ashraak.Audit.Api\Ashraak.Audit.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Caching\Ashraak.Caching.Redis\Ashraak.Caching.Redis.csproj" />
+    <ProjectReference Include="..\..\Modules\Notifications\Ashraak.Notifications.Infrastructure\Ashraak.Notifications.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Notifications\Ashraak.Notifications.Api\Ashraak.Notifications.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Files\Ashraak.Files.Infrastructure\Ashraak.Files.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Files\Ashraak.Files.Api\Ashraak.Files.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Webhooks\Ashraak.Webhooks.Infrastructure\Ashraak.Webhooks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Webhooks\Ashraak.Webhooks.Api\Ashraak.Webhooks.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\ApiKeys\Ashraak.ApiKeys.Infrastructure\Ashraak.ApiKeys.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\ApiKeys\Ashraak.ApiKeys.Api\Ashraak.ApiKeys.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\**\*.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
