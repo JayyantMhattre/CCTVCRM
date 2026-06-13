@@ -15,6 +15,8 @@ using Ashraak.ApiKeys.Api.Endpoints;
 using Ashraak.ApiKeys.Infrastructure;
 using Ashraak.Webhooks.Api.Endpoints;
 using Ashraak.Webhooks.Infrastructure;
+using Ashraak.Cctv.Integration.Infrastructure;
+using Ashraak.Cctv.Api.Endpoints;
 
 namespace Ashraak.Api.Extensions;
 
@@ -60,6 +62,9 @@ internal static class ModuleExtensions
         services.AddWebhooksModule(configuration);
         services.AddApiKeysModule(configuration);
 
+        // Layer 2 — CCTV business modules (Aarvii AMC — Sprint 0 skeleton).
+        services.AddCctvModules(configuration);
+
         // Layer 3 — Cross-cutting observers (Audit, Notifications). Order after business modules.
         services.AddAuditModule(configuration);
         services.AddNotificationsModule(configuration);
@@ -92,6 +97,7 @@ internal static class ModuleExtensions
         routeBuilder.MapFileEndpoints();
         routeBuilder.MapWebhooksEndpoints();
         routeBuilder.MapApiKeysEndpoints();
+        routeBuilder.MapCctvEndpoints();
         routeBuilder.MapAuditEndpoints();
         routeBuilder.MapNotificationsEndpoints();
 

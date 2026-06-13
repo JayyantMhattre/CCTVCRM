@@ -25,4 +25,34 @@ void main() {
     expect(target.type, DeepLinkType.notificationOpen);
     expect(target.path, RoutePaths.notificationPreferences);
   });
+
+  test('parses customer ticket deep link', () {
+    final target = parser.parse(Uri.parse('ashraak://cctv/customer/tickets/ticket-123'));
+    expect(target.type, DeepLinkType.cctvCustomerTicket);
+    expect(target.path, RoutePaths.cctvCustomerTicketDetail('ticket-123'));
+  });
+
+  test('parses customer invoice deep link', () {
+    final target = parser.parse(Uri.parse('ashraak://cctv/customer/invoices/inv-456'));
+    expect(target.type, DeepLinkType.cctvCustomerInvoice);
+    expect(target.path, RoutePaths.cctvCustomerInvoiceDetail('inv-456'));
+  });
+
+  test('parses engineer visit report deep link', () {
+    final target = parser.parse(Uri.parse('ashraak://cctv/engineer/visits/visit-789/report'));
+    expect(target.type, DeepLinkType.cctvEngineerVisitReport);
+    expect(target.path, RoutePaths.cctvEngineerVisitReport('visit-789'));
+  });
+
+  test('parses customer AMC deep link', () {
+    final target = parser.parse(Uri.parse('ashraak://cctv/customer/amc'));
+    expect(target.type, DeepLinkType.cctvCustomerAmc);
+    expect(target.path, RoutePaths.cctvCustomerAmc);
+  });
+
+  test('parses password reset deep link', () {
+    final target = parser.parse(Uri.parse('ashraak://password-reset?email=user@example.com'));
+    expect(target.type, DeepLinkType.passwordReset);
+    expect(target.path, RoutePaths.resetPassword);
+  });
 }

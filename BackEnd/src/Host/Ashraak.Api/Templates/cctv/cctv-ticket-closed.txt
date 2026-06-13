@@ -1,0 +1,10 @@
+﻿Subject: Ticket closed — {{TicketNumber}}
+Hello {{RecipientName}},
+
+Ticket {{TicketNumber}} is now closed.
+
+Subject: {{TicketSubject}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

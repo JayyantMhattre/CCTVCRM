@@ -16,7 +16,22 @@ export const ROUTES = {
   // ── Public / auth ──────────────────────────────────────────────────────────
   login:    '/login',
   register: '/register',
+  forgotPassword: '/forgot-password',
+  resetPassword: '/reset-password',
   sessions: '/account/sessions',
+
+  // ── Public website (anonymous) ─────────────────────────────────────────────
+  public: {
+    home: '/',
+    about: '/about',
+    services: '/services',
+    amc: '/amc',
+    contact: '/contact',
+    gallery: '/gallery',
+    testimonials: '/testimonials',
+    getQuote: '/get-quote',
+    amcInquiry: '/amc-inquiry',
+  },
 
   // ── Authenticated shell ────────────────────────────────────────────────────
   root:      '/',
@@ -62,6 +77,57 @@ export const ROUTES = {
   // ── Error pages ───────────────────────────────────────────────────────────
   forbidden:  '/403',
   notFound:   '/404',
+
+  // ── CCTV — Aarvii AMC (Sprint 0 placeholders) ─────────────────────────────
+  cctv: {
+    admin: {
+      leads: '/admin/leads',
+      leadDetail: '/admin/leads/:leadId',
+      customers: '/admin/customers',
+      customerDetail: '/admin/customers/:customerId',
+      sites: '/admin/sites',
+      siteDetail: '/admin/sites/:siteId',
+      amcPlans: '/admin/amc/plans',
+      amcPlanDetail: '/admin/amc/plans/:planId',
+      amcContracts: '/admin/amc/contracts',
+      amcContractDetail: '/admin/amc/contracts/:contractId',
+      schedules: '/admin/schedules',
+      visits: '/admin/visits',
+      visitDetail: '/admin/visits/:visitId',
+      tickets: '/admin/tickets',
+      ticketDetail: '/admin/tickets/:ticketId',
+      invoices: '/admin/invoices',
+      invoiceCreate: '/admin/invoices/new',
+      invoiceDetail: '/admin/invoices/:invoiceId',
+      invoiceEdit: '/admin/invoices/:invoiceId/edit',
+      engineers: '/admin/engineers',
+      engineerCreate: '/admin/engineers/new',
+      engineerDetail: '/admin/engineers/:engineerId',
+      reports: '/admin/reports',
+      reportView: '/admin/reports/:reportKey',
+    },
+    portal: {
+      dashboard: '/portal/dashboard',
+      amc: '/portal/amc',
+      serviceHistory: '/portal/service/history',
+      upcomingVisits: '/portal/service/upcoming',
+      tickets: '/portal/tickets',
+      ticketCreate: '/portal/tickets/new',
+      ticketDetail: '/portal/tickets/:ticketId',
+      invoices: '/portal/invoices',
+      invoiceDetail: '/portal/invoices/:invoiceId',
+      profile: '/portal/profile',
+    },
+    engineer: {
+      dashboard: '/engineer',
+      visits: '/engineer/visits',
+      visitDetail: '/engineer/visits/:visitId',
+      visitReport: '/engineer/visits/:visitId/report',
+      tickets: '/engineer/tickets',
+      ticketDetail: '/engineer/tickets/:ticketId',
+      profile: '/engineer/profile',
+    },
+  },
 } as const;
 
 /** Resolved profile URL for a user id (use instead of raw `/users/:userId`). */

@@ -1,22 +1,26 @@
 /**
  * useFeatureFlags — platform feature-flag access for navigation visibility.
  *
- * T3/T7 preparation: navigation visibility rules may reference feature flags
- * (`NavigationVisibility.featureFlags`). There is no front-end feature-flag
- * backend yet, so every flag resolves to **enabled** — i.e. no behaviour change.
- *
- * When a real source arrives (config endpoint, env-driven flags, or a flag
- * service), replace the body of `isEnabled` here. Nothing else in the navigation
- * pipeline needs to change.
+ * Resolves flags from static defaults (CCTV placeholders) until a tenant
+ * flag API or config endpoint is wired. Unknown flags default to enabled
+ * to preserve pre-CCTV platform behaviour.
  */
+import {
+  CCTV_FEATURE_FLAG_DEFAULTS,
+  type CctvFeatureFlagKey,
+} from '@/modules/cctv/featureFlags/cctvFeatureFlags';
+
 export interface FeatureFlagApi {
   /** Returns true when the named feature flag is enabled. */
   isEnabled: (flag: string) => boolean;
 }
 
 export function useFeatureFlags(): FeatureFlagApi {
-  function isEnabled(_flag: string): boolean {
-    // No feature-flag backend yet — treat all flags as enabled.
+  function isEnabled(flag: string): boolean {
+    if (flag in CCTV_FEATURE_FLAG_DEFAULTS) {
+      return CCTV_FEATURE_FLAG_DEFAULTS[flag as CctvFeatureFlagKey];
+    }
+
     return true;
   }
 

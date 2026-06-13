@@ -8,6 +8,7 @@ abstract class FileSourceProvider {
   Future<PickedFileSource?> pickFromCamera();
   Future<PickedFileSource?> pickFromGallery();
   Future<PickedFileSource?> pickDocument();
+  Future<PickedFileSource?> pickVideo();
 }
 
 class MobileFileSourceProvider implements FileSourceProvider {
@@ -41,6 +42,22 @@ class MobileFileSourceProvider implements FileSourceProvider {
     );
   }
 
+  @override
+  Future<PickedFileSource?> pickVideo() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: const ['mp4', 'mov'],
+    );
+    if (result == null || result.files.isEmpty) return null;
+    final picked = result.files.first;
+    if (picked.path == null) return null;
+    return PickedFileSource(
+      path: picked.path!,
+      name: picked.name,
+      mimeType: _guessMimeType(picked.name, picked.extension),
+    );
+  }
+
   PickedFileSource? _fromXFile(XFile? file) {
     if (file == null) return null;
     final name = file.name;
@@ -62,6 +79,8 @@ class MobileFileSourceProvider implements FileSourceProvider {
       'doc' => 'application/msword',
       'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'txt' => 'text/plain',
+      'mp4' => 'video/mp4',
+      'mov' => 'video/quicktime',
       _ => 'application/octet-stream',
     };
   }

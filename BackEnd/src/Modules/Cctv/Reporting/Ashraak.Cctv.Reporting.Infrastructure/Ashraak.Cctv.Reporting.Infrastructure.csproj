@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Cctv.Reporting.Infrastructure</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Cctv.Reporting.Application\Ashraak.Cctv.Reporting.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Infrastructure\Ashraak.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\Ashraak.Infrastructure.Shared\Ashraak.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+</Project>

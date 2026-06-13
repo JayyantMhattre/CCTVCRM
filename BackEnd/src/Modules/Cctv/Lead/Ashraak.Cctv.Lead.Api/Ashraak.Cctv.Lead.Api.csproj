@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Cctv.Lead.Api</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Cctv.Lead.Application\Ashraak.Cctv.Lead.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Data.Abstractions\Ashraak.BuildingBlocks.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+  </ItemGroup>
+</Project>

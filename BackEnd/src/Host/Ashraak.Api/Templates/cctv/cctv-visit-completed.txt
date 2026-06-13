@@ -1,0 +1,10 @@
+﻿Subject: Service visit completed — {{ScheduleNumber}}
+Hello {{RecipientName}},
+
+Service visit {{ScheduleNumber}} on {{VisitDate}} is complete.
+
+Site: {{SiteName}}
+
+View history: {{PortalUrl}}
+
+Aarvii Technologies

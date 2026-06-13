@@ -72,6 +72,43 @@
     <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Infrastructure/Ashraak.ApiKeys.Infrastructure.csproj" />
     <Project Path="src/Modules/ApiKeys/Ashraak.ApiKeys.Api/Ashraak.ApiKeys.Api.csproj" />
   </Folder>
+  <Folder Name="/Modules/Cctv/">
+    <Project Path="src/Modules/Cctv/Ashraak.Cctv.Api/Ashraak.Cctv.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Integration/Ashraak.Cctv.Integration.Application/Ashraak.Cctv.Integration.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Integration/Ashraak.Cctv.Integration.Infrastructure/Ashraak.Cctv.Integration.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Lead/Ashraak.Cctv.Lead.Domain/Ashraak.Cctv.Lead.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Lead/Ashraak.Cctv.Lead.Application/Ashraak.Cctv.Lead.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Lead/Ashraak.Cctv.Lead.Infrastructure/Ashraak.Cctv.Lead.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Lead/Ashraak.Cctv.Lead.Api/Ashraak.Cctv.Lead.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Customer/Ashraak.Cctv.Customer.Domain/Ashraak.Cctv.Customer.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Customer/Ashraak.Cctv.Customer.Application/Ashraak.Cctv.Customer.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Customer/Ashraak.Cctv.Customer.Infrastructure/Ashraak.Cctv.Customer.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Customer/Ashraak.Cctv.Customer.Api/Ashraak.Cctv.Customer.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Amc/Ashraak.Cctv.Amc.Domain/Ashraak.Cctv.Amc.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Amc/Ashraak.Cctv.Amc.Application/Ashraak.Cctv.Amc.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Amc/Ashraak.Cctv.Amc.Infrastructure/Ashraak.Cctv.Amc.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Amc/Ashraak.Cctv.Amc.Api/Ashraak.Cctv.Amc.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Service/Ashraak.Cctv.Service.Domain/Ashraak.Cctv.Service.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Service/Ashraak.Cctv.Service.Application/Ashraak.Cctv.Service.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Service/Ashraak.Cctv.Service.Infrastructure/Ashraak.Cctv.Service.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Service/Ashraak.Cctv.Service.Api/Ashraak.Cctv.Service.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Ticket/Ashraak.Cctv.Ticket.Domain/Ashraak.Cctv.Ticket.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Ticket/Ashraak.Cctv.Ticket.Application/Ashraak.Cctv.Ticket.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Ticket/Ashraak.Cctv.Ticket.Infrastructure/Ashraak.Cctv.Ticket.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Ticket/Ashraak.Cctv.Ticket.Api/Ashraak.Cctv.Ticket.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Engineer/Ashraak.Cctv.Engineer.Domain/Ashraak.Cctv.Engineer.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Engineer/Ashraak.Cctv.Engineer.Application/Ashraak.Cctv.Engineer.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Engineer/Ashraak.Cctv.Engineer.Infrastructure/Ashraak.Cctv.Engineer.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Engineer/Ashraak.Cctv.Engineer.Api/Ashraak.Cctv.Engineer.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Invoice/Ashraak.Cctv.Invoice.Domain/Ashraak.Cctv.Invoice.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Invoice/Ashraak.Cctv.Invoice.Application/Ashraak.Cctv.Invoice.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Invoice/Ashraak.Cctv.Invoice.Infrastructure/Ashraak.Cctv.Invoice.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Invoice/Ashraak.Cctv.Invoice.Api/Ashraak.Cctv.Invoice.Api.csproj" />
+    <Project Path="src/Modules/Cctv/Reporting/Ashraak.Cctv.Reporting.Domain/Ashraak.Cctv.Reporting.Domain.csproj" />
+    <Project Path="src/Modules/Cctv/Reporting/Ashraak.Cctv.Reporting.Application/Ashraak.Cctv.Reporting.Application.csproj" />
+    <Project Path="src/Modules/Cctv/Reporting/Ashraak.Cctv.Reporting.Infrastructure/Ashraak.Cctv.Reporting.Infrastructure.csproj" />
+    <Project Path="src/Modules/Cctv/Reporting/Ashraak.Cctv.Reporting.Api/Ashraak.Cctv.Reporting.Api.csproj" />
+  </Folder>
 
   <!-- ═══════════════════════════════════════════════════════
        INFRASTRUCTURE  — shared DB / Redis / Mongo wiring

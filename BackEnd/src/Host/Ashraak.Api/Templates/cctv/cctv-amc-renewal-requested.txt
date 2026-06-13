@@ -1,0 +1,13 @@
+﻿Subject: AMC renewal requested — {{ContractNumber}}
+Hello {{RecipientName}},
+
+An AMC renewal was requested.
+
+Contract: {{ContractNumber}}
+Customer: {{CustomerName}}
+Site: {{SiteName}}
+Expiry: {{ContractExpiryDate}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

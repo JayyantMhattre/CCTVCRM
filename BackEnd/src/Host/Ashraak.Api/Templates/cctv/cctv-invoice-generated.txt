@@ -1,0 +1,12 @@
+﻿Subject: Invoice generated — {{InvoiceNumber}}
+Hello {{RecipientName}},
+
+Invoice {{InvoiceNumber}} has been generated.
+
+Amount: INR {{InvoiceAmount}}
+Date: {{InvoiceDate}}
+Status: {{Status}}
+
+View in portal: {{PortalUrl}}
+
+Aarvii Technologies

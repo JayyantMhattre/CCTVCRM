@@ -1,0 +1,11 @@
+﻿Subject: Visit report approved — {{ScheduleNumber}}
+Hello {{RecipientName}},
+
+The visit report for {{ScheduleNumber}} ({{VisitDate}}) has been approved.
+
+Site: {{SiteName}}
+Status: {{ApprovalStatus}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

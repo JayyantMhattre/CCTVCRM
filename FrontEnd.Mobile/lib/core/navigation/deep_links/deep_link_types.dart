@@ -7,6 +7,14 @@ enum DeepLinkType {
   filesPreview,
   profile,
   home,
+  cctvCustomerTicket,
+  cctvCustomerInvoice,
+  cctvCustomerVisits,
+  cctvCustomerServiceHistory,
+  cctvCustomerAmc,
+  cctvEngineerVisitReport,
+  cctvEngineerVisits,
+  cctvEngineerTickets,
   unknown,
 }
 

@@ -17,10 +17,14 @@ class DeepLinkParser {
 
     final head = segments.first.toLowerCase();
 
+    if (head == 'cctv' && segments.length >= 2) {
+      return _parseCctvRoute(segments.sublist(1), uri.queryParameters);
+    }
+
     return switch (head) {
       'password-reset' || 'reset-password' => DeepLinkTarget(
           type: DeepLinkType.passwordReset,
-          path: RoutePaths.unauthorized,
+          path: RoutePaths.resetPassword,
           queryParameters: uri.queryParameters,
         ),
       'invitations' when segments.length > 1 && segments[1] == 'accept' => DeepLinkTarget(
@@ -59,6 +63,62 @@ class DeepLinkParser {
           queryParameters: uri.queryParameters,
         ),
     };
+  }
+
+  DeepLinkTarget _parseCctvRoute(List<String> segments, Map<String, String> query) {
+    if (segments.isEmpty) {
+      return const DeepLinkTarget(type: DeepLinkType.unknown, path: RoutePaths.home);
+    }
+
+    final audience = segments.first.toLowerCase();
+    if (audience == 'customer' && segments.length >= 2) {
+      return switch (segments[1].toLowerCase()) {
+        'tickets' when segments.length >= 3 => DeepLinkTarget(
+            type: DeepLinkType.cctvCustomerTicket,
+            path: RoutePaths.cctvCustomerTicketDetail(segments[2]),
+            queryParameters: query,
+          ),
+        'invoices' when segments.length >= 3 => DeepLinkTarget(
+            type: DeepLinkType.cctvCustomerInvoice,
+            path: RoutePaths.cctvCustomerInvoiceDetail(segments[2]),
+            queryParameters: query,
+          ),
+        'visits' => const DeepLinkTarget(
+            type: DeepLinkType.cctvCustomerVisits,
+            path: RoutePaths.cctvCustomerVisits,
+          ),
+        'service-history' => const DeepLinkTarget(
+            type: DeepLinkType.cctvCustomerServiceHistory,
+            path: RoutePaths.cctvCustomerServiceHistory,
+          ),
+        'amc' => const DeepLinkTarget(
+            type: DeepLinkType.cctvCustomerAmc,
+            path: RoutePaths.cctvCustomerAmc,
+          ),
+        _ => const DeepLinkTarget(type: DeepLinkType.unknown, path: RoutePaths.home),
+      };
+    }
+
+    if (audience == 'engineer' && segments.length >= 2) {
+      return switch (segments[1].toLowerCase()) {
+        'visits' when segments.length >= 4 && segments[3].toLowerCase() == 'report' => DeepLinkTarget(
+            type: DeepLinkType.cctvEngineerVisitReport,
+            path: RoutePaths.cctvEngineerVisitReport(segments[2]),
+            queryParameters: query,
+          ),
+        'visits' => const DeepLinkTarget(
+            type: DeepLinkType.cctvEngineerVisits,
+            path: RoutePaths.cctvEngineerVisits,
+          ),
+        'tickets' => const DeepLinkTarget(
+            type: DeepLinkType.cctvEngineerTickets,
+            path: RoutePaths.cctvEngineerTickets,
+          ),
+        _ => const DeepLinkTarget(type: DeepLinkType.unknown, path: RoutePaths.home),
+      };
+    }
+
+    return const DeepLinkTarget(type: DeepLinkType.unknown, path: RoutePaths.home);
   }
 
   List<String> _normalizedSegments(Uri uri) {

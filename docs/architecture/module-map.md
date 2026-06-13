@@ -16,6 +16,17 @@
 | **Notifications** | Domain, Application, Infrastructure, Api | — | `/api/v1/notifications/health` | `INotificationService` |
 | **Files** | Domain, Application, Infrastructure, Api | PostgreSQL `files` | `/api/v1/files` | `IFileStorage` |
 | **Webhooks** | Domain, Application, Infrastructure, Api | PostgreSQL `webhooks` | `/api/v1/webhooks/*` | `IWebhookPublisher`, `IWebhookSubscriptionRepository` |
+| **CCTV — Lead** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_lead` | `/api/v1/cctv/leads/*` (Sprint 0: group only) | Sprint 0 skeleton |
+| **CCTV — Customer** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_customer` | `/api/v1/cctv/customers/*` | Sprint 0 skeleton |
+| **CCTV — AMC** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_amc` | `/api/v1/cctv/amc/*` | Sprint 0 skeleton |
+| **CCTV — Service** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_service` | `/api/v1/cctv/service/*` | Sprint 0 skeleton |
+| **CCTV — Ticket** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_ticket` | `/api/v1/cctv/tickets/*` | Sprint 0 skeleton |
+| **CCTV — Engineer** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_engineer` | `/api/v1/cctv/engineers/*` | Sprint 0 skeleton |
+| **CCTV — Invoice** | Domain, Application, Infrastructure, Api | PostgreSQL `cctv_invoice` | `/api/v1/cctv/invoices/*` | Sprint 0 skeleton |
+| **CCTV — Reporting** | Domain, Application, Infrastructure, Api | (read-only) | `/api/v1/cctv/reports/*` | Sprint 0 skeleton |
+| **CCTV — Integration** | Application, Infrastructure | N/A | `/api/v1/cctv/health` | `ISmsProvider`, `IPdfGenerationService`, RBAC seed |
+
+> **CCTV detail:** [project/cctv-module-map.md](../project/cctv-module-map.md) · [project/cctv-module-naming-freeze.md](../project/cctv-module-naming-freeze.md)
 
 ## Platform capabilities (not vertical modules)
 

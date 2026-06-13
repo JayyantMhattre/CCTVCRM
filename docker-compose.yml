@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CCTVCRM / Ashraak — Integrated Local Test Environment (TP-LOCAL-1)
+#
+# Full-stack compose for manual testing: PostgreSQL, API, React web SPA, and
+# supporting infrastructure (Redis, MongoDB, Seq).
+#
+# Backend service definitions are included from BackEnd/docker-compose.yml.
+# Run from the repository root:
+#
+#   cp .env.example .env
+#   docker compose up -d
+#
+# Override file docker-compose.override.yml is auto-loaded for development.
+# ─────────────────────────────────────────────────────────────────────────────
+
+include:
+  - path: ./BackEnd/docker-compose.yml
+
+services:
+
+  # ── React Web SPA (Vite) ────────────────────────────────────────────────────
+  ashraak-web:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+      target: ${WEB_BUILD_TARGET:-development}
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://ashraak-api:8080}
+        VITE_API_VERSION: ${VITE_API_VERSION:-v1}
+        VITE_APP_NAME: ${VITE_APP_NAME:-Ashraak (Local)}
+    image: ashraak/web:${WEB_VERSION:-latest}
+    container_name: ashraak-web
+    restart: unless-stopped
+
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://ashraak-api:8080}
+      VITE_API_VERSION: ${VITE_API_VERSION:-v1}
+      VITE_APP_NAME: ${VITE_APP_NAME:-Ashraak (Local)}
+
+    ports:
+      - "${WEB_PORT:-3000}:${WEB_CONTAINER_PORT:-3000}"
+
+    depends_on:
+      ashraak-api:
+        condition: service_healthy
+
+    networks:
+      - ashraak-net
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://localhost:${WEB_CONTAINER_PORT:-3000}/ > /dev/null 2>&1 || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      start_period: 45s
+      retries: 3

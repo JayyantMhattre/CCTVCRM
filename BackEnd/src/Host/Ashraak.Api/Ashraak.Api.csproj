@@ -4,6 +4,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Ashraak.Integration.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.AspNetCore.OutputCaching.StackExchangeRedis" />
@@ -53,6 +57,8 @@
     <ProjectReference Include="..\..\Modules\Webhooks\Ashraak.Webhooks.Api\Ashraak.Webhooks.Api.csproj" />
     <ProjectReference Include="..\..\Modules\ApiKeys\Ashraak.ApiKeys.Infrastructure\Ashraak.ApiKeys.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\ApiKeys\Ashraak.ApiKeys.Api\Ashraak.ApiKeys.Api.csproj" />
+    <ProjectReference Include="..\..\Modules\Cctv\Integration\Ashraak.Cctv.Integration.Infrastructure\Ashraak.Cctv.Integration.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Cctv\Ashraak.Cctv.Api\Ashraak.Cctv.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

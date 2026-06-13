@@ -20,4 +20,13 @@ abstract final class OfflineCacheKeys {
   static const syncTenant = 'sync:tenant';
   static const syncWebhooks = 'sync:webhooks';
   static const syncApiKeys = 'sync:apikeys';
+
+  static const cctvCustomerTickets = 'cctv:customer:tickets';
+  static const cctvCustomerInvoices = 'cctv:customer:invoices';
+  static const cctvCustomerAmc = 'cctv:customer:amc';
+  static const cctvCustomerVisits = 'cctv:customer:visits';
+  static const cctvEngineerSchedules = 'cctv:engineer:schedules';
+  static const cctvEngineerTickets = 'cctv:engineer:tickets';
+  static const cctvEngineerDashboard = 'cctv:engineer:dashboard';
+  static const cctvOfflineQueue = 'cctv:offline:queue';
 }

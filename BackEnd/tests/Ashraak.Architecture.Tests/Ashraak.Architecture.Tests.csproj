@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Reference all modules so their assemblies are available for analysis -->
     <ProjectReference Include="..\..\src\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
     <ProjectReference Include="..\..\src\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
     <ProjectReference Include="..\..\src\Modules\Auth\Ashraak.Auth.Domain\Ashraak.Auth.Domain.csproj" />
@@ -29,6 +28,14 @@
     <ProjectReference Include="..\..\src\Modules\Audit\Ashraak.Audit.Application\Ashraak.Audit.Application.csproj" />
     <ProjectReference Include="..\..\src\Modules\Audit\Ashraak.Audit.Infrastructure\Ashraak.Audit.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Modules\Caching\Ashraak.Caching.Abstractions\Ashraak.Caching.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Modules\Caching\Ashraak.Caching.Redis\Ashraak.Caching.Redis.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Lead\Ashraak.Cctv.Lead.Domain\Ashraak.Cctv.Lead.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Customer\Ashraak.Cctv.Customer.Domain\Ashraak.Cctv.Customer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Amc\Ashraak.Cctv.Amc.Domain\Ashraak.Cctv.Amc.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Service\Ashraak.Cctv.Service.Domain\Ashraak.Cctv.Service.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Ticket\Ashraak.Cctv.Ticket.Domain\Ashraak.Cctv.Ticket.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Engineer\Ashraak.Cctv.Engineer.Domain\Ashraak.Cctv.Engineer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Invoice\Ashraak.Cctv.Invoice.Domain\Ashraak.Cctv.Invoice.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Reporting\Ashraak.Cctv.Reporting.Domain\Ashraak.Cctv.Reporting.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Integration\Ashraak.Cctv.Integration.Application\Ashraak.Cctv.Integration.Application.csproj" />
   </ItemGroup>
 </Project>

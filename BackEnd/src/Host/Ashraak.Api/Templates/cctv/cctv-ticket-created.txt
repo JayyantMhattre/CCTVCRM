@@ -1,0 +1,11 @@
+﻿Subject: Ticket created — {{TicketNumber}}
+Hello {{RecipientName}},
+
+Ticket {{TicketNumber}} was created.
+
+Subject: {{TicketSubject}}
+Source: {{Source}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

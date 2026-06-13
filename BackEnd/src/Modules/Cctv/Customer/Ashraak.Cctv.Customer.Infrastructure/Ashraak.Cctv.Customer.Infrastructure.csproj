@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Cctv.Customer.Infrastructure</RootNamespace>
+    <NoWarn>$(NoWarn);IDE0161</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ashraak.Integration.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Migrations\**\*.cs">
+      <NoWarn>$(NoWarn);IDE0161</NoWarn>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ashraak.Cctv.Customer.Application\Ashraak.Cctv.Customer.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Infrastructure\Ashraak.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\Infrastructure\Ashraak.Infrastructure.Shared\Ashraak.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+</Project>

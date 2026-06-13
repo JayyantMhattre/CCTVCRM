@@ -27,7 +27,6 @@ import { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
-  Navigate,
   type RouteObject,
 } from 'react-router-dom';
 
@@ -36,6 +35,8 @@ import { AuthGuard }  from '@/shared/guards/AuthGuard';
 import { RoleGuard }  from '@/shared/guards/RoleGuard';
 import { ApiKeysRouteGuard } from '@/modules/apikeys/guards/ApiKeysRouteGuard';
 import { WebhooksRouteGuard } from '@/modules/webhooks/guards/WebhooksRouteGuard';
+import { cctvAdminRoutes, cctvEngineerRoutes, cctvPortalRoutes } from '@/modules/cctv/routes';
+import { cctvPublicRoutes } from '@/modules/cctv/public/routes';
 import { PlatformLayout, PlatformAuthLayout } from '@/platform-ui';
 import { Spinner }    from '@/shared/components/Spinner';
 
@@ -43,6 +44,8 @@ import { Spinner }    from '@/shared/components/Spinner';
 
 const LoginPage     = lazy(() => import('@/modules/auth/pages/LoginPage'));
 const RegisterPage  = lazy(() => import('@/modules/auth/pages/RegisterPage'));
+const ForgotPasswordPage = lazy(() => import('@/modules/auth/pages/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('@/modules/auth/pages/ResetPasswordPage'));
 const SessionsPage  = lazy(() => import('@/modules/auth/pages/SessionsPage'));
 const DashboardPage = lazy(() => import('@/modules/dashboard/pages/DashboardPage'));
 
@@ -85,6 +88,9 @@ function Page({ children }: { children: React.ReactNode }) {
 // ── Route definitions ─────────────────────────────────────────────────────────
 
 const routes: RouteObject[] = [
+  // ── Public website (anonymous) ─────────────────────────────────────────────
+  ...cctvPublicRoutes,
+
   // ── Public auth routes ─────────────────────────────────────────────────────
   {
     element: <PlatformAuthLayout />,
@@ -97,6 +103,14 @@ const routes: RouteObject[] = [
         path: ROUTES.register,
         element: <Page><RegisterPage /></Page>,
       },
+      {
+        path: ROUTES.forgotPassword,
+        element: <Page><ForgotPasswordPage /></Page>,
+      },
+      {
+        path: ROUTES.resetPassword,
+        element: <Page><ResetPasswordPage /></Page>,
+      },
     ],
   },
 
@@ -107,13 +121,7 @@ const routes: RouteObject[] = [
       {
         element: <PlatformLayout />,
         children: [
-          // Redirect / → /dashboard
-          {
-            path: ROUTES.root,
-            element: <Navigate to={ROUTES.dashboard} replace />,
-          },
-
-          // Dashboard — any authenticated user
+          // Authenticated home — dashboard (public site owns `/`)
           {
             path: ROUTES.dashboard,
             element: <Page><DashboardPage /></Page>,
@@ -214,6 +222,11 @@ const routes: RouteObject[] = [
               },
             ],
           },
+
+          // CCTV — Sprint 0 placeholders (Admin / Customer / Engineer)
+          ...cctvAdminRoutes,
+          ...cctvPortalRoutes,
+          ...cctvEngineerRoutes,
         ],
       },
     ],

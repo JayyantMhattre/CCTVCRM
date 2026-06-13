@@ -1,0 +1,11 @@
+﻿Subject: Ticket assigned — {{TicketNumber}}
+Hello {{RecipientName}},
+
+Ticket {{TicketNumber}} has been assigned.
+
+Subject: {{TicketSubject}}
+Priority: {{Priority}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

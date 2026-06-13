@@ -231,3 +231,6 @@ finally
     // Ensures all buffered Serilog events are flushed before the process exits.
     await Log.CloseAndFlushAsync();
 }
+
+/// <summary>Exposes the implicit Program class for integration test WebApplicationFactory.</summary>
+public partial class Program;

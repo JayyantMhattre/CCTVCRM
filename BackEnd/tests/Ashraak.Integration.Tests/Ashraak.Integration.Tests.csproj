@@ -20,5 +20,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Host\Ashraak.Api\Ashraak.Api.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Lead\Ashraak.Cctv.Lead.Domain\Ashraak.Cctv.Lead.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Lead\Ashraak.Cctv.Lead.Infrastructure\Ashraak.Cctv.Lead.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Customer\Ashraak.Cctv.Customer.Domain\Ashraak.Cctv.Customer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Customer\Ashraak.Cctv.Customer.Infrastructure\Ashraak.Cctv.Customer.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Amc\Ashraak.Cctv.Amc.Domain\Ashraak.Cctv.Amc.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Amc\Ashraak.Cctv.Amc.Infrastructure\Ashraak.Cctv.Amc.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Engineer\Ashraak.Cctv.Engineer.Domain\Ashraak.Cctv.Engineer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Engineer\Ashraak.Cctv.Engineer.Infrastructure\Ashraak.Cctv.Engineer.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Ticket\Ashraak.Cctv.Ticket.Domain\Ashraak.Cctv.Ticket.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Ticket\Ashraak.Cctv.Ticket.Infrastructure\Ashraak.Cctv.Ticket.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Invoice\Ashraak.Cctv.Invoice.Domain\Ashraak.Cctv.Invoice.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Cctv\Invoice\Ashraak.Cctv.Invoice.Infrastructure\Ashraak.Cctv.Invoice.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

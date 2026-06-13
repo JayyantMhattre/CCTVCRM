@@ -28,7 +28,18 @@ export type NavigationIconKey =
   | 'tenant-settings'
   | 'users'
   | 'profile'
-  | 'audit';
+  | 'audit'
+  | 'leads'
+  | 'customers'
+  | 'sites'
+  | 'amc'
+  | 'contracts'
+  | 'schedule'
+  | 'visits'
+  | 'tickets'
+  | 'engineers'
+  | 'invoices'
+  | 'reports';
 
 /** Bootstrap/CoreUI-style contextual colour variants for a badge. */
 export type NavigationBadgeVariant =

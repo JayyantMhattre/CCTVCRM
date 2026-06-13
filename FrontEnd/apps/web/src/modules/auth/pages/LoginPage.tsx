@@ -117,9 +117,14 @@ export default function LoginPage() {
 
         {/* Password */}
         <div className="mb-3">
-          <label htmlFor="password" className="form-label fw-semibold">
-            Password
-          </label>
+          <div className="d-flex justify-content-between align-items-center mb-1">
+            <label htmlFor="password" className="form-label fw-semibold mb-0">
+              Password
+            </label>
+            <Link to={ROUTES.forgotPassword} className="small text-primary">
+              Forgot password?
+            </Link>
+          </div>
           <input
             id="password"
             type="password"

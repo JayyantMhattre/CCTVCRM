@@ -66,6 +66,20 @@ class HomePage extends ConsumerWidget {
             icon: Icons.fact_check_outlined,
             onTap: () => context.go(RoutePaths.audit),
           ),
+        if (user?.hasRole('Customer') ?? false)
+          _ModuleCard(
+            title: 'Customer AMC app',
+            subtitle: 'AMC, visits, tickets, invoices',
+            icon: Icons.home_repair_service_outlined,
+            onTap: () => context.go(RoutePaths.cctvCustomer),
+          ),
+        if (user?.hasRole('Engineer') ?? false)
+          _ModuleCard(
+            title: 'Engineer field app',
+            subtitle: 'Visits, tickets, visit reporting',
+            icon: Icons.engineering_outlined,
+            onTap: () => context.go(RoutePaths.cctvEngineer),
+          ),
         _ModuleCard(
           title: 'Profile',
           subtitle: 'Avatar, tenant, roles',

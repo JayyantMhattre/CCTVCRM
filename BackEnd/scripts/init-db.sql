@@ -37,6 +37,31 @@ CREATE SCHEMA IF NOT EXISTS webhooks;
 -- API Keys module schema
 CREATE SCHEMA IF NOT EXISTS apikeys;
 
+-- CCTV business module schemas (Aarvii AMC — Sprint 0)
+CREATE SCHEMA IF NOT EXISTS cctv_lead;
+CREATE SCHEMA IF NOT EXISTS cctv_customer;
+CREATE SCHEMA IF NOT EXISTS cctv_amc;
+CREATE SCHEMA IF NOT EXISTS cctv_service;
+CREATE SCHEMA IF NOT EXISTS cctv_ticket;
+CREATE SCHEMA IF NOT EXISTS cctv_engineer;
+CREATE SCHEMA IF NOT EXISTS cctv_invoice;
+
+GRANT ALL PRIVILEGES ON SCHEMA cctv_lead TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_customer TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_amc TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_service TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_ticket TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_engineer TO current_user;
+GRANT ALL PRIVILEGES ON SCHEMA cctv_invoice TO current_user;
+
+COMMENT ON SCHEMA cctv_lead IS 'Lead Management module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_customer IS 'Customer, Site, Asset module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_amc IS 'AMC Plans and Contracts module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_service IS 'Scheduling and Visit Management module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_ticket IS 'Ticket Management module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_engineer IS 'Engineer Management module (Aarvii CCTV).';
+COMMENT ON SCHEMA cctv_invoice IS 'Invoice Management module (Aarvii CCTV).';
+
 -- Grant all privileges to the application user on each schema.
 -- The POSTGRES_USER env var becomes the owner automatically, but explicit
 -- grants are good practice for least-privilege setups where a read-only

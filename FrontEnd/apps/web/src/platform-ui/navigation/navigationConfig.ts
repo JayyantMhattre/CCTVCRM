@@ -16,6 +16,11 @@
 
 import { ROUTES } from '@/core/router/routeMap';
 import type { NavigationGroupConfig } from './models';
+import {
+  CCTV_ADMIN_NAV,
+  CCTV_CUSTOMER_NAV,
+  CCTV_ENGINEER_NAV,
+} from '@/modules/cctv/navigation/cctvNavigationConfig';
 
 export const NAVIGATION_CONFIG: readonly NavigationGroupConfig[] = [
   {
@@ -51,4 +56,7 @@ export const NAVIGATION_CONFIG: readonly NavigationGroupConfig[] = [
       { id: 'audit-logs', label: 'Audit Logs', to: ROUTES.audit.logs, icon: 'audit' },
     ],
   },
+  ...CCTV_ADMIN_NAV,
+  ...CCTV_CUSTOMER_NAV,
+  ...CCTV_ENGINEER_NAV,
 ];

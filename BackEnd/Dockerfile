@@ -21,6 +21,12 @@ WORKDIR /app
 # The host port mapping is controlled in docker-compose, not here.
 EXPOSE 8080
 
+# curl is required by Docker HEALTHCHECK and compose health probes.
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Create a non-root user for security hardening.
 # Running as root inside a container is a security risk.
 RUN addgroup --system --gid 1001 appgroup \

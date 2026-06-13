@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Cctv.Invoice.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ashraak.Cctv.Invoice.Infrastructure" />
+    <InternalsVisibleTo Include="Ashraak.Integration.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Integration\Ashraak.Cctv.Integration.Application\Ashraak.Cctv.Integration.Application.csproj" />
+    <ProjectReference Include="..\Ashraak.Cctv.Invoice.Domain\Ashraak.Cctv.Invoice.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel.Contracts\Ashraak.SharedKernel.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Application\Ashraak.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Data.Abstractions\Ashraak.BuildingBlocks.Data.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

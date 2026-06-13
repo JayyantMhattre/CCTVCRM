@@ -41,3 +41,20 @@ No mobile-specific auth APIs.
 - Login / register screens in `features/auth/`
 - MFA challenge step
 - Biometric unlock (M4)
+
+## D1-13 Wave 4 — Password reset (native)
+
+Public routes (no session required):
+
+| Screen | Route | API |
+|--------|-------|-----|
+| Request OTP | `/forgot-password` | `POST /auth/password-reset/request` |
+| Verify OTP + reset | `/reset-password` | `POST /auth/password-reset/verify`, `/confirm` |
+
+Entry: `UnauthorizedPage` → Forgot password link.
+
+- **Email OTP:** platform email template (`password-reset-otp`)
+- **Mobile OTP:** optional phone on request screen; API accepts `phoneNumber` — SMS delivery is a **V1.1 candidate** (Auth email-only today)
+- **Reset password:** challenge + new password on `/reset-password`
+
+Files: `lib/features/auth/pages/forgot_password_page.dart`, `reset_password_page.dart`, `data/password_reset_repository.dart`.

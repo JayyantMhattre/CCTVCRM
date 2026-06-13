@@ -25,6 +25,22 @@ import 'package:ashraak_mobile/features/webhooks/pages/webhook_deliveries_page.d
 import 'package:ashraak_mobile/features/apikeys/pages/apikey_detail_page.dart';
 import 'package:ashraak_mobile/features/apikeys/pages/apikey_list_page.dart';
 import 'package:ashraak_mobile/features/webhooks/pages/webhook_overview_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_dashboard_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_amc_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_visits_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_tickets_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_invoices_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_invoice_detail_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_service_history_page.dart';
+import 'package:ashraak_mobile/features/cctv_customer/pages/cctv_customer_ticket_detail_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_sync_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_ticket_create_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_dashboard_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_visits_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_tickets_page.dart';
+import 'package:ashraak_mobile/features/cctv_engineer/pages/cctv_engineer_visit_report_page.dart';
+import 'package:ashraak_mobile/features/auth/pages/forgot_password_page.dart';
+import 'package:ashraak_mobile/features/auth/pages/reset_password_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -44,6 +60,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final gate = ref.read(biometricGateProvider);
       final isPublic = location == RoutePaths.splash ||
           location == RoutePaths.unauthorized ||
+          location == RoutePaths.forgotPassword ||
+          location == RoutePaths.resetPassword ||
           location == RoutePaths.biometricGate;
 
       if (location == RoutePaths.splash) {
@@ -80,6 +98,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return RoutePaths.home;
       }
 
+      if (_isCctvCustomerRoute(location) && !(user?.hasRole('Customer') ?? false)) {
+        return RoutePaths.home;
+      }
+
+      if (_isCctvEngineerRoute(location) && !(user?.hasRole('Engineer') ?? false)) {
+        return RoutePaths.home;
+      }
+
       return null;
     },
     routes: [
@@ -92,6 +118,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: RoutePaths.unauthorized,
         name: 'unauthorized',
         builder: (context, state) => const UnauthorizedPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.forgotPassword,
+        name: 'forgotPassword',
+        builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.resetPassword,
+        name: 'resetPassword',
+        builder: (context, state) => ResetPasswordPage(
+          initialTenantId: state.uri.queryParameters['tenantId'],
+          initialEmail: state.uri.queryParameters['email'],
+        ),
       ),
       GoRoute(
         path: RoutePaths.biometricGate,
@@ -195,6 +234,94 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
+          GoRoute(
+            path: RoutePaths.cctvCustomer,
+            name: 'cctvCustomer',
+            builder: (context, state) => const CctvCustomerDashboardPage(),
+            routes: [
+              GoRoute(
+                path: 'amc',
+                name: 'cctvCustomerAmc',
+                builder: (context, state) => const CctvCustomerAmcPage(),
+              ),
+              GoRoute(
+                path: 'visits',
+                name: 'cctvCustomerVisits',
+                builder: (context, state) => const CctvCustomerVisitsPage(),
+              ),
+              GoRoute(
+                path: 'tickets',
+                name: 'cctvCustomerTickets',
+                builder: (context, state) => const CctvCustomerTicketsPage(),
+                routes: [
+                  GoRoute(
+                    path: ':ticketId',
+                    name: 'cctvCustomerTicketDetail',
+                    builder: (context, state) => CctvCustomerTicketDetailPage(
+                      ticketId: state.pathParameters['ticketId']!,
+                    ),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'invoices',
+                name: 'cctvCustomerInvoices',
+                builder: (context, state) => const CctvCustomerInvoicesPage(),
+                routes: [
+                  GoRoute(
+                    path: ':invoiceId',
+                    name: 'cctvCustomerInvoiceDetail',
+                    builder: (context, state) => CctvCustomerInvoiceDetailPage(
+                      invoiceId: state.pathParameters['invoiceId']!,
+                    ),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'service-history',
+                name: 'cctvCustomerServiceHistory',
+                builder: (context, state) => const CctvCustomerServiceHistoryPage(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: RoutePaths.cctvEngineer,
+            name: 'cctvEngineer',
+            builder: (context, state) => const CctvEngineerDashboardPage(),
+            routes: [
+              GoRoute(
+                path: 'visits',
+                name: 'cctvEngineerVisits',
+                builder: (context, state) => const CctvEngineerVisitsPage(),
+                routes: [
+                  GoRoute(
+                    path: ':visitId/report',
+                    name: 'cctvEngineerVisitReport',
+                    builder: (context, state) => CctvEngineerVisitReportPage(
+                      visitId: state.pathParameters['visitId']!,
+                    ),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'tickets',
+                name: 'cctvEngineerTickets',
+                builder: (context, state) => const CctvEngineerTicketsPage(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    name: 'cctvEngineerTicketCreate',
+                    builder: (context, state) => const CctvEngineerTicketCreatePage(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'sync',
+                name: 'cctvEngineerSync',
+                builder: (context, state) => const CctvEngineerSyncPage(),
+              ),
+            ],
+          ),
         ],
       ),
     ],
@@ -209,4 +336,14 @@ bool _isWebhookRoute(String location) {
 bool _isApiKeyRoute(String location) {
   return location == RoutePaths.apiKeys ||
       location.startsWith('${RoutePaths.apiKeys}/');
+}
+
+bool _isCctvCustomerRoute(String location) {
+  return location == RoutePaths.cctvCustomer ||
+      location.startsWith('${RoutePaths.cctvCustomer}/');
+}
+
+bool _isCctvEngineerRoute(String location) {
+  return location == RoutePaths.cctvEngineer ||
+      location.startsWith('${RoutePaths.cctvEngineer}/');
 }

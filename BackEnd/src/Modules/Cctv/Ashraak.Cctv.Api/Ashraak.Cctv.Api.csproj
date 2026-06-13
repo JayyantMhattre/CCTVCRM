@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Ashraak.Cctv.Api</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lead\Ashraak.Cctv.Lead.Api\Ashraak.Cctv.Lead.Api.csproj" />
+    <ProjectReference Include="..\Customer\Ashraak.Cctv.Customer.Api\Ashraak.Cctv.Customer.Api.csproj" />
+    <ProjectReference Include="..\Amc\Ashraak.Cctv.Amc.Api\Ashraak.Cctv.Amc.Api.csproj" />
+    <ProjectReference Include="..\Service\Ashraak.Cctv.Service.Api\Ashraak.Cctv.Service.Api.csproj" />
+    <ProjectReference Include="..\Ticket\Ashraak.Cctv.Ticket.Api\Ashraak.Cctv.Ticket.Api.csproj" />
+    <ProjectReference Include="..\Engineer\Ashraak.Cctv.Engineer.Api\Ashraak.Cctv.Engineer.Api.csproj" />
+    <ProjectReference Include="..\Invoice\Ashraak.Cctv.Invoice.Api\Ashraak.Cctv.Invoice.Api.csproj" />
+    <ProjectReference Include="..\Reporting\Ashraak.Cctv.Reporting.Api\Ashraak.Cctv.Reporting.Api.csproj" />
+  </ItemGroup>
+</Project>

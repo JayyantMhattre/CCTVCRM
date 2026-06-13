@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <RootNamespace>Ashraak.Cctv.Integration.Infrastructure</RootNamespace>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="MediatR" />
+
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+
+    <PackageReference Include="Microsoft.Extensions.Http" />
+
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+
+    <PackageReference Include="Npgsql" />
+
+    <PackageReference Include="QuestPDF" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\..\..\..\BuildingBlocks\Ashraak.BuildingBlocks.Infrastructure\Ashraak.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ashraak.Cctv.Integration.Application\Ashraak.Cctv.Integration.Application.csproj" />
+
+    <ProjectReference Include="..\..\..\..\Shared\Ashraak.SharedKernel\Ashraak.SharedKernel.csproj" />
+
+    <ProjectReference Include="..\..\..\..\Modules\Files\Ashraak.Files.Application\Ashraak.Files.Application.csproj" />
+
+    <ProjectReference Include="..\..\Lead\Ashraak.Cctv.Lead.Infrastructure\Ashraak.Cctv.Lead.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Customer\Ashraak.Cctv.Customer.Infrastructure\Ashraak.Cctv.Customer.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Amc\Ashraak.Cctv.Amc.Infrastructure\Ashraak.Cctv.Amc.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Service\Ashraak.Cctv.Service.Infrastructure\Ashraak.Cctv.Service.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Ticket\Ashraak.Cctv.Ticket.Infrastructure\Ashraak.Cctv.Ticket.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Engineer\Ashraak.Cctv.Engineer.Infrastructure\Ashraak.Cctv.Engineer.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Invoice\Ashraak.Cctv.Invoice.Infrastructure\Ashraak.Cctv.Invoice.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\Reporting\Ashraak.Cctv.Reporting.Infrastructure\Ashraak.Cctv.Reporting.Infrastructure.csproj" />
+
+  </ItemGroup>
+
+</Project>
+

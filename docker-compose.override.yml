@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CCTVCRM / Ashraak — Development Overrides (TP-LOCAL-1)
+#
+# Auto-loaded when running `docker compose up` from the repository root.
+# Merges BackEnd dev overrides and relaxes web settings for local testing.
+# ─────────────────────────────────────────────────────────────────────────────
+
+include:
+  - path: ./BackEnd/docker-compose.override.yml
+
+services:
+
+  ashraak-web:
+    build:
+      target: development
+    environment:
+      VITE_API_BASE_URL: http://ashraak-api:8080
+      VITE_APP_NAME: Ashraak (Local Dev)
+    volumes:
+      # Hot-reload: mount source while node_modules stay in the image layer.
+      - ./FrontEnd/apps/web/src:/app/apps/web/src:delegated
+      - ./FrontEnd/apps/web/index.html:/app/apps/web/index.html:delegated
+      - ./FrontEnd/apps/web/vite.config.ts:/app/apps/web/vite.config.ts:delegated

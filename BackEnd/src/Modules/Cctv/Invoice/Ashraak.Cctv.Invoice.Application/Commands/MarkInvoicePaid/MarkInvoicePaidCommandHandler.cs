@@ -1,0 +1,52 @@
+using Ashraak.Cctv.Invoice.Application.Mapping;
+using Ashraak.Cctv.Invoice.Domain.Aggregates.Invoice;
+using Ashraak.Cctv.Invoice.Domain.Repositories;
+using Ashraak.SharedKernel.Contracts.Auth.Interfaces;
+using Ashraak.SharedKernel.Contracts.CctvCrm;
+using Ashraak.SharedKernel.Contracts.CctvCrm.Dtos;
+using Ashraak.SharedKernel.Contracts.FeatureFlags.Interfaces;
+using Ashraak.SharedKernel.Interfaces;
+using Ashraak.SharedKernel.Results;
+using MediatR;
+
+namespace Ashraak.Cctv.Invoice.Application.Commands.MarkInvoicePaid;
+
+internal sealed class MarkInvoicePaidCommandHandler(
+    IInvoiceRepository invoiceRepository,
+    IAuthPermissionChecker permissionChecker,
+    IFeatureFlagService featureFlags,
+    IUnitOfWork unitOfWork) : IRequestHandler<MarkInvoicePaidCommand, Result<InvoiceDetailDto>>
+{
+    public async Task<Result<InvoiceDetailDto>> Handle(
+        MarkInvoicePaidCommand request,
+        CancellationToken cancellationToken)
+    {
+        if (!await featureFlags.IsEnabledAsync(CctvFeatureFlags.InvoicesEnabled, request.TenantId, cancellationToken))
+            return Error.Forbidden("Invoices.Disabled", "Invoice management is not enabled for this tenant.");
+
+        var authError = await InvoiceAuthorization.EnsureCanManageAsync(
+            permissionChecker, request.UserId, request.TenantId, cancellationToken);
+        if (authError is not null)
+            return authError;
+
+        var invoice = await invoiceRepository.GetByIdAsync(InvoiceId.From(request.InvoiceId), cancellationToken);
+        if (invoice is null)
+            return Error.NotFound("Invoices.NotFound", "Invoice not found.");
+
+        var concurrencyError = InvoiceConcurrencyHelper.EnsureRowVersion(request.RowVersion, invoice.RowVersion);
+        if (concurrencyError is not null)
+            return concurrencyError;
+
+        try
+        {
+            var paidAt = request.PaidAt ?? DateTime.UtcNow;
+            invoice.MarkPaid(paidAt, request.UserId);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return InvoiceMapper.ToDetail(invoice);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Error.Validation("Invoices.MarkPaidFailed", ex.Message);
+        }
+    }
+}

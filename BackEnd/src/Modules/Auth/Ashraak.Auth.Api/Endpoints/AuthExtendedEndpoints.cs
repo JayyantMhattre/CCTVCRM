@@ -1,5 +1,6 @@
 using Ashraak.Auth.Application.Commands.Invitations;
 using Ashraak.Auth.Application.Commands.Mfa;
+using Ashraak.Auth.Application.Commands.PasswordReset;
 using Ashraak.Auth.Domain.Entities;
 using Ashraak.Auth.Domain.Repositories;
 using Ashraak.SharedKernel.Interfaces;
@@ -38,6 +39,15 @@ internal static class AuthExtendedEndpoints
             .AllowAnonymous();
 
         publicGroup.MapPost("/mfa/verify", VerifyMfaChallenge)
+            .AllowAnonymous();
+
+        publicGroup.MapPost("/password-reset/request", RequestPasswordResetOtp)
+            .AllowAnonymous();
+
+        publicGroup.MapPost("/password-reset/verify", VerifyPasswordResetOtp)
+            .AllowAnonymous();
+
+        publicGroup.MapPost("/password-reset/confirm", ConfirmPasswordReset)
             .AllowAnonymous();
 
         return routeBuilder;
@@ -177,6 +187,48 @@ internal static class AuthExtendedEndpoints
             : Results.Ok(result.Value);
     }
 
+    private static async Task<IResult> RequestPasswordResetOtp(
+        [FromBody] RequestPasswordResetOtpRequest request,
+        ISender sender,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new RequestPasswordResetOtpCommand(request.TenantId, request.Email, request.PhoneNumber),
+            cancellationToken);
+
+        return result.IsFailure
+            ? Results.Problem(result.Error.Description, statusCode: StatusCodes.Status400BadRequest)
+            : Results.Ok();
+    }
+
+    private static async Task<IResult> VerifyPasswordResetOtp(
+        [FromBody] VerifyPasswordResetOtpRequest request,
+        ISender sender,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new VerifyPasswordResetOtpCommand(request.TenantId, request.Email, request.OtpCode),
+            cancellationToken);
+
+        return result.IsFailure
+            ? Results.Problem(result.Error.Description, statusCode: StatusCodes.Status400BadRequest)
+            : Results.Ok(result.Value);
+    }
+
+    private static async Task<IResult> ConfirmPasswordReset(
+        [FromBody] ConfirmPasswordResetRequest request,
+        ISender sender,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new ConfirmPasswordResetCommand(request.ChallengeId, request.NewPassword),
+            cancellationToken);
+
+        return result.IsFailure
+            ? Results.Problem(result.Error.Description, statusCode: StatusCodes.Status400BadRequest)
+            : Results.Ok();
+    }
+
     private static async Task<IResult> ListSessions(
         ICurrentUser currentUser,
         IUserSessionRepository sessions,
@@ -255,6 +307,9 @@ public sealed record AcceptInvitationRequest(string Token, string? Password, str
 public sealed record ConfirmMfaEnrollRequest(string Secret, string Code);
 public sealed record DisableMfaRequest(string Code);
 public sealed record VerifyMfaChallengeRequest(string ChallengeId, string Code);
+public sealed record RequestPasswordResetOtpRequest(Guid TenantId, string Email, string? PhoneNumber);
+public sealed record VerifyPasswordResetOtpRequest(Guid TenantId, string Email, string OtpCode);
+public sealed record ConfirmPasswordResetRequest(string ChallengeId, string NewPassword);
 public sealed record SessionDto(
     Guid Id,
     DateTime CreatedOnUtc,

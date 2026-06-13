@@ -1,0 +1,12 @@
+﻿Subject: New lead received — {{LeadNumber}}
+Hello {{RecipientName}},
+
+A new lead {{LeadNumber}} was created.
+
+Contact: {{ContactName}}
+Email: {{Email}}
+Source: {{Source}}
+
+Review in admin portal: {{PortalUrl}}
+
+Aarvii Technologies

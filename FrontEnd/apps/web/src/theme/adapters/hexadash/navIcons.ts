@@ -15,6 +15,15 @@ import {
   cilPeople,
   cilUser,
   cilDescription,
+  cilList,
+  cilGroup,
+  cilLocationPin,
+  cilShieldAlt,
+  cilSpreadsheet,
+  cilCalendar,
+  cilTask,
+  cilEnvelopeClosed,
+  cilChart,
 } from '@coreui/icons';
 import type { NavigationIconKey } from '@/theme/contracts';
 
@@ -25,4 +34,15 @@ export const HEXADASH_NAV_ICONS: Record<NavigationIconKey, string[]> = {
   users: cilPeople,
   profile: cilUser,
   audit: cilDescription,
+  leads: cilList,
+  customers: cilGroup,
+  sites: cilLocationPin,
+  amc: cilShieldAlt,
+  contracts: cilSpreadsheet,
+  schedule: cilCalendar,
+  visits: cilLocationPin,
+  tickets: cilTask,
+  engineers: cilPeople,
+  invoices: cilEnvelopeClosed,
+  reports: cilChart,
 };

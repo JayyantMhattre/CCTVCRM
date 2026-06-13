@@ -20,6 +20,159 @@ Enterprise SaaS template — modular monolith (.NET 10) + React 19 SPA + Flutter
 
 ---
 
+## Project — Aarvii CCTV AMC Management System (D0)
+
+Business-module project built on the frozen platform. Source of truth: [requirements-freeze-v1.md](./project/requirements-freeze-v1.md).
+
+| Document | Description |
+|----------|-------------|
+| [Requirements Freeze V1](./project/requirements-freeze-v1.md) | **Authoritative frozen requirements** |
+| [Product vision](./project/product-vision-document.md) | Vision, objectives, success criteria |
+| [Scope freeze](./project/scope-freeze-v1.md) | In/out of scope, approved modules & actors |
+| [Actors & personas](./project/actors-and-personas.md) | Public Visitor, Customer, Engineer, Admin |
+| [BRD](./project/business-requirements-document.md) | Functional & non-functional requirements |
+| [Business rules](./project/business-rules.md) | 46 approved rules by domain |
+| [Workflows](./project/workflow-overview.md) | Lead, AMC renewal, tickets, visits, invoices (Mermaid) |
+| [High-level design](./project/high-level-design.md) | Context, architecture, stack, security |
+| [Application architecture](./project/application-architecture.md) | Website + 3 portals + backend + integrations |
+| [Module architecture](./project/module-architecture.md) | 15 approved modules |
+| [Mobile architecture](./project/mobile-architecture.md) | Customer & Engineer Flutter apps |
+| [Navigation map](./project/navigation-map.md) | Navigation trees per application |
+| [Screen inventory](./project/screen-inventory.md) | All V1 screens by module |
+| [Project roadmap](./project/project-roadmap.md) | Phases D0–D7 |
+| [Platform discovery report](./project-bootstrap/platform-discovery-report.md) | Platform capabilities & reuse assessment |
+
+PDF versions: [docs/project/pdf/](./project/pdf/)
+
+### D0-4 — Entity Model & Database Design (`docs/project/design/`)
+
+| Document | Description |
+|----------|-------------|
+| [Entity model](./project/design/entity-model.md) | All 32 entities, aggregates, ownership, lifecycle ownership |
+| [Database architecture](./project/design/database-architecture.md) | Schema-per-module strategy, transactions, audit & files strategy |
+| [Naming standards](./project/design/database-naming-standards.md) | Tables, keys, indexes, audit fields, soft delete |
+| [Lifecycle matrix](./project/design/entity-lifecycle-matrix.md) | CRUD/archive/approval/status transitions per entity |
+| [ERD overview](./project/design/erd-overview.md) | Complete system ERD (Mermaid) |
+| Domain ERDs | [Lead](./project/design/erd-lead-domain.md) · [Customer](./project/design/erd-customer-domain.md) · [AMC](./project/design/erd-amc-domain.md) · [Service](./project/design/erd-service-domain.md) · [Ticket](./project/design/erd-ticket-domain.md) · [Invoice](./project/design/erd-invoice-domain.md) |
+| [Future considerations](./project/design/database-future-considerations.md) | Extensibility headroom without current-design changes |
+
+### D0-5 — RBAC, Navigation & Screen Inventory (`docs/project/design/`)
+
+| Document | Description |
+|----------|-------------|
+| [Platform reuse analysis](./project/design/platform-reuse-analysis.md) | **Key doc** — EXISTS/EXTEND/NEW per requirement + effort |
+| [RBAC matrix](./project/design/rbac-matrix.md) | Role × module/screen/action/API/file/audit/notification |
+| [Permission catalog](./project/design/permission-catalog.md) | 9 REUSE platform permissions + 30 NEW CCTV permissions |
+| [Navigation architecture](./project/design/navigation-architecture.md) | Shell reuse + 4 app navigation trees classified |
+| [Screen inventory (design)](./project/design/screen-inventory.md) | 71 screens with role, class, dependencies, mobile |
+| [Dashboard design](./project/design/dashboard-design.md) | Admin/Customer/Engineer dashboards, widget classification |
+| Portal navigation | [Admin](./project/design/admin-portal-navigation.md) · [Customer](./project/design/customer-portal-navigation.md) · [Engineer](./project/design/engineer-portal-navigation.md) |
+| [Mobile screen inventory](./project/design/mobile-screen-inventory.md) | 34 mobile screens; foundation reuse classified |
+| [User journeys](./project/design/user-journeys.md) | 6 end-to-end journey diagrams (Mermaid) |
+
+### D0-6 — API Architecture & Module Contracts (`docs/project/design/`)
+
+| Document | Description |
+|----------|-------------|
+| [API reuse analysis](./project/design/api-reuse-analysis.md) | **Key doc** — REUSE/EXTEND/NEW per API capability + effort |
+| [API architecture](./project/design/api-architecture.md) | Versioning, naming, pagination, errors, files/notifications/audit integration |
+| [Module contracts](./project/design/module-contracts.md) | Cross-module interfaces, events, dependencies for all 11 modules |
+| [Endpoint catalog](./project/design/endpoint-catalog.md) | ~115 CCTV routes + platform REUSE inventory |
+| [DTO catalog](./project/design/dto-catalog.md) | Request/response/summary/detail/mobile DTO inventory |
+| [Integration design](./project/design/integration-design.md) | Website, portals, mobile, modules, platform services |
+| [Event catalog](./project/design/event-catalog.md) | Domain events + webhook names |
+| [Notification mapping](./project/design/notification-mapping.md) | Events → email/SMS/push |
+| [File management design](./project/design/file-management-design.md) | Platform Files reuse, categories, retention |
+| [Audit mapping](./project/design/audit-mapping.md) | Platform Audit reuse, auditable actions |
+| [Mobile API consumption](./project/design/mobile-api-consumption.md) | Customer/Engineer apps, offline/sync boundaries |
+| [OpenAPI roadmap](./project/design/openapi-roadmap.md) | SDK generation strategy for web + Flutter |
+
+### D0-7 — Low Level Design (`docs/project/design/lld/`)
+
+| Document | Description |
+|----------|-------------|
+| [Platform component reuse](./project/design/lld/platform-component-reuse.md) | **Key doc** — REUSE/EXTEND/NEW per UI component |
+| [Screen design specification](./project/design/lld/screen-design-specification.md) | All 71 screens: purpose, nav, actions, class |
+| [Form catalog](./project/design/lld/form-catalog.md) | Fields, types, validations, permissions |
+| [Grid catalog](./project/design/lld/grid-catalog.md) | Columns, sort, filter, search, export |
+| [Validation rules](./project/design/lld/validation-rules.md) | Client + server rules by domain |
+| [Workflow screen design](./project/design/lld/workflow-screen-design.md) | 6 workflows screen-by-screen |
+| [Dashboard specification](./project/design/lld/dashboard-specification.md) | Widget data sources, refresh, permissions |
+| [PDF document design](./project/design/lld/pdf-document-design.md) | Contract, visit report, invoice PDF layouts |
+| [Report specification](./project/design/lld/report-specification.md) | Admin reports: columns, filters, export |
+| [Mobile screen design](./project/design/lld/mobile-screen-design.md) | Customer + Engineer mobile UX |
+| [Notification UX design](./project/design/lld/notification-ux-design.md) | Toasts, email/SMS copy, push |
+| [File upload design](./project/design/lld/file-upload-design.md) | Categories, limits, two-step pattern |
+| [Audit UX design](./project/design/lld/audit-ux-design.md) | Audit viewer reuse + business timelines |
+| [Theme usage design](./project/design/lld/theme-usage-design.md) | platform-ui rules, responsive, no theme imports |
+
+### D0-8 — Implementation Roadmap & Delivery Plan (`docs/project/roadmap/`)
+
+| Document | Description |
+|----------|-------------|
+| [Implementation roadmap](./project/roadmap/implementation-roadmap.md) | **Master roadmap** — phases, dependencies, milestones, critical path, complexity |
+| [Platform reuse roadmap](./project/roadmap/platform-reuse-roadmap.md) | EXISTS / REUSE / EXTEND / NEW per requirement |
+| [Phase execution playbook](./project/roadmap/phase-execution-playbook.md) | **Gate checklist** — Review Gate 1 (D1-1..D1-7) & Review Gate 2 (full tests) |
+| [Backend development phases](./project/roadmap/backend-development-phases.md) | B1–B7 sequencing: entities, APIs, events, audit |
+| [Frontend development phases](./project/roadmap/frontend-development-phases.md) | Admin, Customer, Engineer portals — reuse/extend/new |
+| [Mobile development phases](./project/roadmap/mobile-development-phases.md) | Customer + Engineer Flutter — screen classification |
+| [Database implementation plan](./project/roadmap/database-implementation-plan.md) | Schema rollout, migrations, seed & rollback |
+| [Integration roadmap](./project/roadmap/integration-roadmap.md) | Notifications, files, audit, webhooks, PDF, SMS/email |
+| [Testing roadmap](./project/roadmap/testing-roadmap.md) | Unit → UAT → regression strategy |
+| [Release plan](./project/roadmap/release-plan.md) | Dev/QA/UAT/Prod, versioning, checkpoints, rollback |
+| [Sprint plan](./project/roadmap/sprint-plan.md) | 11-sprint sequence (Sprint 0–11) with gates |
+| [Risk register](./project/roadmap/risk-register.md) | Business, technical, mobile, infra risks + mitigations |
+| [Definition of done](./project/roadmap/definition-of-done.md) | DoD for backend, frontend, mobile, docs, testing, release |
+
+### D1-0 — Architecture Validation & Readiness Review (`docs/project/review/`)
+
+| Document | Description |
+|----------|-------------|
+| [Architecture validation report](./project/review/architecture-validation-report.md) | Cross-doc consistency: requirements, HLD, ERD, RBAC, API, LLD, roadmap |
+| [Gap analysis report](./project/review/gap-analysis-report.md) | Missing items classified Critical/High/Medium/Low |
+| [Platform reuse validation](./project/review/platform-reuse-validation.md) | **Key doc** — REUSE/EXTEND/NEW per requirement; duplicate check |
+| [Dependency validation](./project/review/dependency-validation.md) | Module, API, DB, frontend, mobile, deployment dependencies |
+| [Security readiness review](./project/review/security-readiness-review.md) | Auth, RBAC, role separation, files, audit, OTP, sessions |
+| [Data model review](./project/review/data-model-review.md) | Entities, relationships, lifecycle, normalization |
+| [Implementation readiness scorecard](./project/review/implementation-readiness-scorecard.md) | Percentage readiness by dimension (~91% overall) |
+| [Phase readiness report](./project/review/phase-readiness-report.md) | B1–B7 executable without ambiguity |
+| [Risk reassessment](./project/review/risk-reassessment.md) | D0-8 risks reviewed post-validation |
+| [Final implementation recommendation](./project/review/final-implementation-recommendation.md) | **GO WITH CONDITIONS** — justification and mandatory conditions |
+| [Architecture decision confirmation](./project/review/architecture-decision-confirmation.md) | 30 confirmed ADs, 6 needs-review, 10 future enhancements |
+
+### Sprint 0 — Foundation bootstrap (D1)
+
+| Document | Description |
+|----------|-------------|
+| [Sprint 0 completion report](./project/sprint-0-completion-report.md) | **Sprint 0 deliverables** — **APPROVED ✅** |
+| [Sprint 1 / B1 completion report](./project/sprint-1-b1-completion-report.md) | **Lead Management (B1)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-2 completion report](./project/sprint-1-d1-2-completion-report.md) | **Customer Management (D1-2)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-3 completion report](./project/sprint-1-d1-3-completion-report.md) | **Site Management (D1-3)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-4 completion report](./project/sprint-1-d1-4-completion-report.md) | **AMC Management (D1-4)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-5 completion report](./project/sprint-1-d1-5-completion-report.md) | **Scheduling & Visits (D1-5)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-6 completion report](./project/sprint-1-d1-6-completion-report.md) | **Ticket Management (D1-6)** — **COMPLETE ✅** |
+| [Sprint 1 / D1-7 completion report](./project/sprint-1-d1-7-completion-report.md) | **Invoice Management (D1-7)** — **COMPLETE ✅** |
+| [Review Gate 2 completion report](./project/review-gate-2-completion-report.md) | **Full test execution (D1-1..D1-7)** — **PASSED ✅** |
+| [Sprint 1 / D1-8 completion report](./project/sprint-1-d1-8-completion-report.md) | **Engineer Management (D1-8)** — **COMPLETE ✅** |
+| [D1-9 completion report](./project/d1-9-engineer-portal-completion-report.md) | **Engineer Portal (D1-9)** — **COMPLETE ✅** |
+| [D1-10 completion report](./project/d1-10-mobile-completion-report.md) | **Mobile Applications (D1-10)** — **COMPLETE ✅** |
+| [D1-11 completion report](./project/d1-11-reporting-completion-report.md) | **Reporting (D1-11)** — **COMPLETE ✅** |
+| [D1-12 completion report](./project/d1-12-hardening-completion-report.md) | **Hardening & Release Readiness (D1-12)** — **COMPLETE ✅** |
+| [D1-13a completion report](./project/d1-13a-public-website-completion-report.md) | **Public Website (D1-13 Wave 1)** — **COMPLETE ✅** |
+| [D1-13b completion report](./project/d1-13b-customer-portal-completion-report.md) | **Customer Portal Web (D1-13 Wave 1)** — **COMPLETE ✅** |
+| [D1-13c completion report](./project/d1-13c-notifications-completion-report.md) | **CCTV Notifications (D1-13 Wave 2)** — **COMPLETE ✅** |
+| [D1-13d completion report](./project/d1-13d-pdf-generation-completion-report.md) | **Production PDF (D1-13 Wave 2)** — **COMPLETE ✅** |
+| [Release candidate review](./project/review/release-candidate-review.md) | **RC review** — Conditional GO, await architectural sign-off |
+| [Project completeness review](./project/review/project-completeness-review.md) | **V1 traceability** — post D1-13 Wave 2; ~65% strict / ~80% weighted |
+| [CCTV module map](./project/cctv-module-map.md) | **Authoritative CCTV module inventory** — deps, routes, flags, phases |
+| [CCTV module naming freeze](./project/cctv-module-naming-freeze.md) | **Frozen naming** — projects, schemas, APIs, docs |
+| ADR-CCTV-0001 | [SMS provider strategy](./project/adr/ADR-CCTV-0001-sms-provider-strategy.md) |
+| ADR-CCTV-0002 | [PDF generation strategy](./project/adr/ADR-CCTV-0002-pdf-generation-strategy.md) |
+| ADR-CCTV-0003 | [Module naming freeze](./project/adr/ADR-CCTV-0003-module-naming-freeze.md) |
+| Module docs | [cctv-lead](./modules/cctv-lead/README.md) · [cctv-customer](./modules/cctv-customer/README.md) · [cctv-amc](./modules/cctv-amc/README.md) · [cctv-service](./modules/cctv-service/README.md) · [cctv-ticket](./modules/cctv-ticket/README.md) · [cctv-engineer](./modules/cctv-engineer/README.md) · [cctv-invoice](./modules/cctv-invoice/README.md) · [cctv-reporting](./modules/cctv-reporting/README.md) · [cctv-integration](./modules/cctv-integration/README.md) |
+
+---
+
 ## Architecture
 
 | Document | Description |

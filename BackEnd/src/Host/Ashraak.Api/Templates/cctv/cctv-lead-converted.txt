@@ -1,0 +1,12 @@
+﻿Subject: Lead converted — {{LeadNumber}}
+Hello {{RecipientName}},
+
+Lead {{LeadNumber}} was converted to a customer.
+
+Customer: {{CustomerName}}
+Site: {{SiteName}}
+Contract: {{ContractNumber}}
+
+{{PortalUrl}}
+
+Aarvii Technologies

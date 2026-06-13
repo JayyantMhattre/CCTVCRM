@@ -1,0 +1,11 @@
+﻿Subject: Welcome to Aarvii AMC
+Hello {{RecipientName}},
+
+Welcome! Your AMC account is ready.
+
+Customer: {{CustomerName}}
+Site: {{SiteName}}
+
+Access your portal: {{PortalUrl}}
+
+Aarvii Technologies

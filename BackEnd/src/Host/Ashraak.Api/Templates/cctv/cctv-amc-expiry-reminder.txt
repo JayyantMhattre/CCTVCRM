@@ -1,0 +1,11 @@
+﻿Subject: AMC expiring soon — {{ContractNumber}}
+Hello {{RecipientName}},
+
+Your AMC contract {{ContractNumber}} expires on {{ContractExpiryDate}} ({{Days}} days).
+
+Customer: {{CustomerName}}
+Site: {{SiteName}}
+
+Renew via portal: {{PortalUrl}}
+
+Aarvii Technologies

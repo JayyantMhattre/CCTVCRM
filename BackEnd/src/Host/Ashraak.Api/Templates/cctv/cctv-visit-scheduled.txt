@@ -1,0 +1,12 @@
+﻿Subject: Service visit scheduled — {{ScheduleNumber}}
+Hello {{RecipientName}},
+
+A service visit has been scheduled.
+
+Schedule: {{ScheduleNumber}}
+Date: {{VisitDate}}
+Site: {{SiteName}}
+
+{{PortalUrl}}
+
+Aarvii Technologies
