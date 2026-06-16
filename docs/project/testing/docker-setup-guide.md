@@ -37,7 +37,7 @@ docker compose version
 ### 2.2 Configure environment
 
 ```powershell
-cd C:\Jayant_Git_Local\CCTVCRM
+cd <repository-root>
 Copy-Item .env.example .env
 ```
 
