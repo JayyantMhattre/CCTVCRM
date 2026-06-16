@@ -29,8 +29,8 @@ RUN apt-get update \
 
 # Create a non-root user for security hardening.
 # Running as root inside a container is a security risk.
-RUN addgroup --system --gid 1001 appgroup \
-    && adduser  --system --uid 1001 --ingroup appgroup --no-create-home appuser
+RUN groupadd --system --gid 1001 appgroup \
+    && useradd --system --uid 1001 --gid appgroup --no-create-home appuser
 
 # ── Stage 2: build ───────────────────────────────────────────────────────────
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
@@ -100,21 +100,17 @@ COPY . .
 
 ARG BUILD_CONFIGURATION=Release
 
-# Build the API project.
-RUN dotnet build "src/Host/Ashraak.Api/Ashraak.Api.csproj" \
-    -c "$BUILD_CONFIGURATION" \
-    --no-restore \
-    -o /app/build
+# Restore again after full source copy — V1 modules exceed the cached csproj COPY list above.
+RUN dotnet restore "src/Host/Ashraak.Api/Ashraak.Api.csproj"
 
 # ── Stage 3: publish ──────────────────────────────────────────────────────────
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 
-# Publish to a self-contained directory.
-# --no-build: build was already done in the previous stage.
+# Publish directly (build + publish) — avoids broken --no-build when using a custom build output path.
 RUN dotnet publish "src/Host/Ashraak.Api/Ashraak.Api.csproj" \
     -c "$BUILD_CONFIGURATION" \
-    --no-build \
+    --no-restore \
     -o /app/publish \
     /p:UseAppHost=false
 

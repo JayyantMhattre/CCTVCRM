@@ -4,7 +4,7 @@
 **Project:** Aarvii CCTV AMC Management System (Ashraak)  
 **Date:** 2026-06-13  
 **Phase:** Environment setup only (code freeze respected)  
-**Status:** **COMPLETE** — artifacts delivered; runtime validation pending local Docker install
+**Status:** **COMPLETE** — artifacts delivered; API build verified; Docker runtime validation pending local Docker install
 
 ---
 
@@ -114,7 +114,7 @@ Docker network: ashraak-net (bridge)
 ### First-time setup
 
 ```powershell
-cd C:\Jayant_Git_Local\CCTVCRM
+cd <repository-root>
 Copy-Item .env.example .env
 docker compose up -d --build
 docker compose ps
@@ -179,15 +179,18 @@ Full GUID reference: [smoke-test-data-guide.md](docs/project/testing/smoke-test-
 
 | Check | Result | Notes |
 |-------|--------|-------|
-| `docker compose config` | ⚠️ Not run | Docker CLI not available in build agent environment |
+| `Directory.Packages.props` | ✅ Fixed | File was empty in repo; restored from initial commit + QuestPDF version added |
+| API `dotnet build` (Release) | ✅ Passed | `Ashraak.Api.dll` builds successfully on .NET SDK 10.0.103 |
+| `docker compose config` | ⚠️ Not run | Docker CLI not available in validation environment |
 | `docker compose up` | ⚠️ Not run | Requires Docker Desktop on developer machine |
-| API health endpoint | ⚠️ Not run | Pending local verification |
-| Web startup | ⚠️ Not run | Pending local verification |
+| API health endpoint | ⚠️ Not run | Pending local Docker verification |
+| Web startup | ⚠️ Not run | Pending local Docker verification |
 | PostgreSQL volume | ✅ Configured | `postgres_data` named volume |
 | Health checks defined | ✅ Yes | API, postgres, redis, mongodb, web |
 | Compose include paths | ✅ Valid | Relative to `BackEnd/` per Compose spec |
+| Seed SQL entity coverage | ✅ Verified | Lead, Customer, Site, AMC, Visit, Ticket, Invoice, Engineer |
 
-**Action required:** Run validation on a machine with Docker Desktop installed using the startup instructions in Section 5.
+**Action required:** Run Docker validation on a machine with Docker Desktop installed using the startup instructions in Section 5.
 
 ---
 
@@ -204,6 +207,7 @@ Full GUID reference: [smoke-test-data-guide.md](docs/project/testing/smoke-test-
 | 7 | **Mobile excluded** | Flutter app not containerized | Per TP-LOCAL-1 scope |
 | 8 | **First build time** | .NET + Node builds are slow | `--build` only when code changes |
 | 9 | **pnpm lockfile absent** | `pnpm install` resolves latest compatible versions in Docker | Acceptable for dev; pin lockfile in future if needed |
+| 10 | **`Directory.Packages.props` was empty** | API Docker build would fail | Restored from git history; QuestPDF version added |
 
 ---
 
@@ -250,6 +254,8 @@ Full GUID reference: [smoke-test-data-guide.md](docs/project/testing/smoke-test-
 ### Modified files
 
 - `BackEnd/Dockerfile` — added `curl` for healthcheck reliability
+- `BackEnd/Directory.Packages.props` — restored from initial commit (was empty); added QuestPDF 2026.2.4
+- `docs/project/testing/docker-setup-guide.md` — generic repository path in examples
 
 ### Unchanged (reused)
 

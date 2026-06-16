@@ -67,6 +67,24 @@ services:
         Username=${POSTGRES_USER:-ashraak};
         Password=${POSTGRES_PASSWORD};
         Search Path=users
+      ConnectionStrings__Files: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=files
+      ConnectionStrings__Webhooks: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=webhooks
+      ConnectionStrings__ApiKeys: >-
+        Host=${POSTGRES_HOST:-postgres};Port=5432;
+        Database=${POSTGRES_DB:-ashraak};
+        Username=${POSTGRES_USER:-ashraak};
+        Password=${POSTGRES_PASSWORD};
+        Search Path=apikeys
 
       # ── Redis ──────────────────────────────────────────────────────────────
       ConnectionStrings__Redis: >-
